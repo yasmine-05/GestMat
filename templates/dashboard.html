@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dashboard - COLAIMO</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="dashboard-container">
+    <aside>
+        <div class="top">
+            <div class="logo">
+                 <img src="{{ url_for('static', filename='logo.png') }}"> 
+                 <h2>COLAIMO</h2>
+            </div>
+        </div>
+    </aside>
+
+
+        <div class="search-box">
+            <input type="text" placeholder="Rechercher...">
+        </div>
+
+
+        <ul class="menu">
+
+            <li>Tableau de bord</li>
+
+            <li>Matériels</li>
+
+            <li>Ajouter matériel</li>
+
+            <li>Maintenance</li>
+
+            <li> Utilisateurs</li>
+
+        </ul>
+
+
+        <div class="sidebar-footer">
+
+            <p>Admin</p>
+
+            <p>Déconnexion</p>
+
+        </div>
+
+
+    </aside>
+
+    <main class="content">
+
+        <h1>Tableau de bord</h1>
+
+        <p>Bienvenue dans votre espace de gestion COLAIMO</p>
+
+
+        <div class="cards">
+
+            <div class="card-box">
+                <h3>Total matériels</h3>
+                <span>0</span>
+            </div>
+
+
+            <div class="card-box">
+                <h3>Disponibles</h3>
+                <span>0</span>
+            </div>
+
+
+            <div class="card-box">
+                <h3>Maintenance</h3>
+                <span>0</span>
+            </div>
+
+        </div>
+
+
+    </main>
+
+
+</div>
+
+</body>
+</html>
+ <script>
+    window.onload= function() {
+        console.log("Dashboard loaded successfully");
+    };
+    const menuItems=document.querySelectorAll(".sidebar li");
+
+    menuItems.forEach(item => {
+        item.addEventListener("click", function() {
+            menuItems.forEach(i=> i.classList.remove("active"));
+            thid.classList.add("active");
+        });
+    });
+ </script>
+</body>
+</html>

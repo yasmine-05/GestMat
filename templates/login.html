@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion - Gestion des Matériels</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<form class="card" method="POST" action="/login">
+ <img src="{{ url_for('static', filename='logo.png') }}" 
+   
+         class="logo" 
+         alt="Logo">
+
+    <h1>Connexion</h1>
+
+    <div class="field">
+        <label for="username">Identifiant</label>
+        <input 
+            type="text"
+            id="username"
+            name="username"
+            placeholder="Entrer votre identifiant"
+            required>
+    </div>
+
+    <div class="field">
+        <label for="password">Mot de passe</label>
+        <input 
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Entrer votre mot de passe"
+            required>
+    </div>
+
+    <button type="submit" class="submit-btn">
+        Se connecter
+    </button>
+
+</form>
+
+</body>
+</html>

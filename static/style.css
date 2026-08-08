@@ -1,0 +1,119 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #ffffff;
+}
+
+
+
+.card{
+    width: 400px;
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+}
+
+
+.logo{
+    width: 170px;
+    height: 170px;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto 20px;
+}
+
+
+h1{
+    text-align: center;
+    color: #1b5e20;
+    margin-bottom: 30px;
+    font-size: 28px;
+}
+
+
+.field{
+    margin-bottom: 20px;
+}
+
+label{
+    display: block;
+    margin-bottom: 8px;
+    color: #333333;
+    font-weight: bold;
+}
+
+input{
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #cccccc;
+    border-radius: 8px;
+    font-size: 15px;
+    outline: none;
+    transition: 0.3s;
+}
+
+input:focus{
+    border-color: #2e7d32;
+    box-shadow: 0 0 8px rgba(46,125,50,0.25);
+}
+
+
+
+.submit-btn{
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 8px;
+    background-color: #2e7d32;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.submit-btn:hover{
+    background-color: #1b5e20;
+}
+
+.dashboard{
+    width: 90%;
+    text-align: center;
+}
+
+.dashboard h1{
+    margin-bottom: 40px;
+}
+
+.cards{
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+}
+
+.box{
+    background: white;
+    width: 250px;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+.box h2{
+    color: #2e7d32;
+    margin-bottom: 15px;
+}
+
+.box p{
+    color: #555;
+}
