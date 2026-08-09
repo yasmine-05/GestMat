@@ -1,106 +1,408 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Dashboard - COLAIMO</title>
 
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
 </head>
 
 <body>
 
 <div class="dashboard-container">
-    <aside>
-        <div class="top">
-            <div class="logo">
-                 <img src="{{ url_for('static', filename='logo.png') }}"> 
-                 <h2>COLAIMO</h2>
-            </div>
+    <aside class="sidebar">
+
+        <div class="logo">
+            <img src="{{ url_for('static', filename='logo.png') }}"
+                 alt="COLAIMO Logo">
         </div>
-    </aside>
+        <nav class="menu">
+            <a href="#" class="menu-item active">
+                Tableau de bord
+            </a>
 
+            <a href="#" class="menu-item">
+                Matériels
+            </a>
 
-        <div class="search-box">
-            <input type="text" placeholder="Rechercher...">
-        </div>
+            <a href="#" class="menu-item">
+                Ajouter matériel
+            </a>
 
+            <a href="#" class="menu-item">
+                Maintenance
+            </a>
 
-        <ul class="menu">
+            <a href="#" class="menu-item">
+                Utilisateurs
+            </a>
 
-            <li>Tableau de bord</li>
-
-            <li>Matériels</li>
-
-            <li>Ajouter matériel</li>
-
-            <li>Maintenance</li>
-
-            <li> Utilisateurs</li>
-
-        </ul>
+        </nav>
 
 
         <div class="sidebar-footer">
 
             <p>Admin</p>
 
-            <p>Déconnexion</p>
+            <a href="#">Déconnexion</a>
 
         </div>
-
 
     </aside>
-
     <main class="content">
+        <header class="dashboard-header">
 
-        <h1>Tableau de bord</h1>
+            <div>
+                <h1>Tableau de bord</h1>
+                <p>Bienvenue dans votre espace de gestion COLAIMO</p>
+            </div>
 
-        <p>Bienvenue dans votre espace de gestion COLAIMO</p>
+            <div class="user-info">
+                <span>Bonjour,</span>
+                <strong>Admin</strong>
+            </div>
 
-
-        <div class="cards">
-
+        </header>
+        <section class="cards">
             <div class="card-box">
+
+                <div class="card-top">
+
+                    <div class="card-icon blue">
+                    </div>
+
+                    <div class="circle">
+                        <span>81%</span>
+                    </div>
+
+                </div>
+
                 <h3>Total matériels</h3>
-                <span>0</span>
+
+                <h2>25 024</h2>
+
+                <p>Dernières 24 heures</p>
+
             </div>
-
-
             <div class="card-box">
-                <h3>Disponibles</h3>
-                <span>0</span>
+
+                <div class="card-top">
+
+                    <div class="card-icon red">
+                    </div>
+
+                    <div class="circle">
+                        <span>62%</span>
+                    </div>
+
+                </div>
+
+                <h3>Total dépenses</h3>
+
+                <h2>14 160</h2>
+
+                <p>Dernières 24 heures</p>
+
             </div>
-
-
             <div class="card-box">
-                <h3>Maintenance</h3>
-                <span>0</span>
+
+                <div class="card-top">
+
+                    <div class="card-icon green">
+                        ↗
+                    </div>
+
+                    <div class="circle">
+                        <span>44%</span>
+                    </div>
+
+                </div>
+
+                <h3>Total revenus</h3>
+
+                <h2>10 864</h2>
+
+                <p>Dernières 24 heures</p>
+
             </div>
 
-        </div>
+        </section>
+        <section class="dashboard-grid">
+            <div class="recent-orders">
 
+                <div class="section-title">
+
+                    <h2>Matériels récents</h2>
+
+                    <button id="showAllBtn">
+                        Voir tout
+                    </button>
+
+                </div>
+                <div class="table-container">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>Nom du matériel</th>
+
+                                <th>Référence</th>
+
+                                <th>Marque</th>
+
+                                <th>Date d'achat</th>
+
+                                <th>Quantité</th>
+
+                            </tr>
+
+                        </thead>
+                        <tbody>
+
+                            <tr>
+                                <td>Ordinateur</td>
+
+                                <td>PC001</td>
+
+                                <td>HP</td>
+
+                                <td>05/08/2026</td>
+
+                                <td>10</td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td>Écran</td>
+
+                                <td>SCR002</td>
+
+                                <td>Samsung</td>
+
+                                <td>03/08/2026</td>
+
+                                <td>15</td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td>Clavier</td>
+
+                                <td>KBD003</td>
+
+                                <td>Logitech</td>
+
+                                <td>02/08/2026</td>
+
+                                <td>20</td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td>Imprimante</td>
+
+                                <td>IMP004</td>
+
+                                <td>Canon</td>
+
+                                <td>01/08/2026</td>
+
+                                <td>5</td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td>Souris</td>
+
+                                <td>MOU005</td>
+
+                                <td>Logitech</td>
+
+                                <td>30/07/2026</td>
+
+                                <td>18</td>
+
+                            </tr>
+                            <tr>
+
+                                <td>Projecteur</td>
+
+                                <td>PRO006</td>
+
+                                <td>Epson</td>
+
+                                <td>28/07/2026</td>
+
+                                <td>3</td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+            <div class="right-side">
+                <div class="updates">
+
+                    <h2>Dernières mises à jour</h2>
+
+
+                    <div class="update-item">
+
+                        <div class="update-icon">
+                        </div>
+
+                        <div>
+
+                            <strong>Nouveau matériel</strong>
+
+                            <p>Un ordinateur a été ajouté.</p>
+
+                            <small>Il y a 2 minutes</small>
+
+                        </div>
+
+                    </div>
+
+                    <div class="update-item">
+
+                        <div class="update-icon">
+                        </div>
+
+                        <div>
+
+                            <strong>Modification</strong>
+
+                            <p>La quantité a été mise à jour.</p>
+
+                            <small>Il y a 5 minutes</small>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="update-item">
+
+                        <div class="update-icon">
+                        </div>
+
+                        <div>
+
+                            <strong>Nouveau matériel</strong>
+
+                            <p>Un écran a été ajouté.</p>
+
+                            <small>Il y a 6 minutes</small>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="analytics">
+
+                    <h2>Analyse</h2>
+
+
+                    <div class="analytics-item">
+
+                        <div class="analytics-icon blue">
+                            ●
+                        </div>
+
+                        <div class="analytics-text">
+
+                            <strong>Matériels disponibles</strong>
+
+                            <small>Dernières 24 heures</small>
+
+                        </div>
+
+                        <span class="percentage positive">
+                            +18%
+                        </span>
+
+                        <strong>849</strong>
+
+                    </div>
+
+
+                    <div class="analytics-item">
+
+                        <div class="analytics-icon red">
+                            ●
+                        </div>
+
+                        <div class="analytics-text">
+
+                            <strong>En maintenance</strong>
+
+                            <small>Dernières 24 heures</small>
+
+                        </div>
+
+                        <span class="percentage negative">
+                            -17%
+                        </span>
+
+                        <strong>110</strong>
+
+                    </div>
+
+
+                    <div class="analytics-item">
+
+                        <div class="analytics-icon green">
+                            ●
+                        </div>
+
+                        <div class="analytics-text">
+
+                            <strong>Nouveaux matériels</strong>
+
+                            <small>Dernières 24 heures</small>
+
+                        </div>
+
+                        <span class="percentage positive">
+                            +20%
+                        </span>
+
+                        <strong>25</strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
 
     </main>
 
-
 </div>
 
-</body>
-</html>
- <script>
-    window.onload= function() {
-        console.log("Dashboard loaded successfully");
-    };
-    const menuItems=document.querySelectorAll(".sidebar li");
+<script src="{{ url_for('static', filename='dashboard.js') }}"></script>
 
-    menuItems.forEach(item => {
-        item.addEventListener("click", function() {
-            menuItems.forEach(i=> i.classList.remove("active"));
-            thid.classList.add("active");
-        });
-    });
- </script>
 </body>
 </html>
