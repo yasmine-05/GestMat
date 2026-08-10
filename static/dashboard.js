@@ -4,9 +4,7 @@ const menuItems = document.querySelectorAll(".menu-item");
 
 menuItems.forEach(item => {
 
-    item.addEventListener("click", function(event) {
-
-        event.preventDefault();
+    item.addEventListener("click", function() {
 
         menuItems.forEach(menu => {
             menu.classList.remove("active");
@@ -20,8 +18,12 @@ menuItems.forEach(item => {
 
 const showAllButton = document.getElementById("showAllBtn");
 
-showAllButton.addEventListener("click", function() {
+if (showAllButton) {
 
-    alert("Tous les matériels seront affichés ici.");
+    showAllButton.addEventListener("click", function() {
 
-});
+        alert("Tous les matériels seront affichés ici.");
+
+    });
+
+}

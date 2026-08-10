@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajouter une maintenance - COLAIMO</title>
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="maintenance-page">
+    <div class="maintenance-header">
+        <div>
+            <h1>Ajouter une maintenance</h1>
+            <p>
+                Enregistrer une opération de maintenance pour un matériel.
+            </p>
+        </div>
+        <a href="{{ url_for('maintenance') }}" class="back-btn">
+            Retour à la maintenance
+        </a>
+    </div>
+    <div class="maintenance-form-card">
+        <h2>Informations de maintenance</h2>
+        <form method="POST">
+            <div class="form-group">
+                <label for="material_id">
+                    Matériel
+                </label>
+                <select name="material_id" id="material_id" required>
+                    <option value="">
+                        Sélectionner un matériel
+                    </option>
+                    {% for material in materials %}
+                    <option value="{{ material[0] }}">
+                        {{ material[1] }} - {{ material[2] }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="type_maintenance">
+                    Type de maintenance
+                </label>
+                <select name="type_maintenance"
+                        id="type_maintenance"
+                        required>
+                    <option value="">
+                        Sélectionner
+                    </option>
+                    <option value="Préventive">
+                        Préventive
+                    </option>
+                    <option value="Corrective">
+                        Corrective
+                    </option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="date_maintenance">
+                    Date de maintenance
+                </label>
+                <input
+                    type="date"
+                    name="date_maintenance"
+                    id="date_maintenance"
+                    required
+                >
+            </div>
+            <div class="form-group">
+                <label for="statut">
+                    Statut
+                </label>
+                <select name="statut" id="statut" required>
+                    <option value="">
+                        Sélectionner
+                    </option>
+                    <option value="En maintenance">
+                        En maintenance
+                    </option>
+                    <option value="Terminée">
+                        Terminée
+                    </option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="description">
+                    Description
+                </label>
+                <textarea
+                    name="description"
+                    id="description"
+                    rows="4"
+                    placeholder="Décrire le problème ou l'opération effectuée..."
+                ></textarea>
+            </div>
+            <div class="form-buttons">
+                <a href="{{ url_for('maintenance') }}"
+                   class="cancel-btn">
+                    Annuler
+                </a>
+                <button type="submit" class="submit-btn">
+                    Ajouter maintenance
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>
