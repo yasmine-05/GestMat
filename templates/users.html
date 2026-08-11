@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Utilisateurs - COLAIMO</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="users-page">
+
+    <div class="users-header">
+
+        <div>
+            <h1>Gestion des utilisateurs</h1>
+            <p>Utilisateurs autorisés à accéder au système COLAIMO.</p>
+        </div>
+
+        <a href="{{ url_for('home') }}" class="back-btn">
+            Retour au tableau de bord
+        </a>
+
+    </div>
+
+
+    <div class="users-card">
+
+        <div class="users-card-header">
+
+            <h2>Liste des utilisateurs</h2>
+
+            <a href="#" class="add-btn">
+                + Ajouter utilisateur
+            </a>
+
+        </div>
+
+
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>ID</th>
+                        <th>Nom d'utilisateur</th>
+                        <th>Action</th>
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for user in users %}
+
+                    <tr>
+
+                        <td>
+                            {{ user[0] }}
+                        </td>
+
+                        <td>
+                            {{ user[1] }}
+                        </td>
+
+                        <td>
+
+                            <a href="{{ url_for('delete_user', user_id=user[0]) }}"
+                               class="delete-btn">
+                                Supprimer
+                            </a>
+
+                        </td>
+
+                    </tr>
+
+                    {% else %}
+
+                    <tr>
+
+                        <td colspan="3">
+                            Aucun utilisateur enregistré.
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>
