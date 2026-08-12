@@ -18,8 +18,13 @@
     <div class="users-header">
 
         <div>
+            <p class="page-label">ADMINISTRATION</p>
+
             <h1>Gestion des utilisateurs</h1>
-            <p>Utilisateurs autorisés à accéder au système COLAIMO.</p>
+
+            <p>
+                Gérez les personnes qui ont accès à votre espace COLAIMO.
+            </p>
         </div>
 
         <a href="{{ url_for('home') }}" class="back-btn">
@@ -28,12 +33,98 @@
 
     </div>
 
+    <div class="user-stats">
+
+        <div class="user-stat-card green-stat">
+
+            <div class="stat-icon">
+                U
+            </div>
+
+            <div>
+                <span>Utilisateurs</span>
+
+                <strong>{{ users|length }}</strong>
+
+                <small>Comptes enregistrés</small>
+            </div>
+
+        </div>
+
+
+        <div class="user-stat-card yellow-stat">
+
+            <div class="stat-icon">
+                A
+            </div>
+
+            <div>
+                <span>Administrateurs</span>
+
+                <strong>{{ users|length }}</strong>
+
+                <small>Accès administrateur</small>
+            </div>
+
+        </div>
+
+
+        <div class="user-stat-card blue-stat">
+
+            <div class="stat-icon">
+                A
+            </div>
+
+            <div>
+                <span>Accès actifs</span>
+
+                <strong>{{ users|length }}</strong>
+
+                <small>Utilisateurs actifs</small>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="admin-profile">
+
+        <div class="profile-avatar">
+            Y
+        </div>
+
+        <div class="profile-info">
+
+            <span class="profile-label">
+                COMPTE ADMINISTRATEUR
+            </span>
+
+            <h2>Yasmine</h2>
+
+            <p>
+                yasmineel
+            </p>
+
+        </div>
+
+        <div class="profile-status">
+            <span class="status-dot"></span>
+            Actif
+        </div>
+
+    </div>
 
     <div class="users-card">
 
         <div class="users-card-header">
 
-            <h2>Liste des utilisateurs</h2>
+            <div>
+                <h2>Utilisateurs du système</h2>
+
+                <p>
+                    Comptes ayant accès à l'application COLAIMO.
+                </p>
+            </div>
 
             <a href="#" class="add-btn">
                 + Ajouter utilisateur
@@ -44,13 +135,15 @@
 
         <div class="table-container">
 
-            <table>
+            <table class="users-table">
 
                 <thead>
 
                     <tr>
                         <th>ID</th>
-                        <th>Nom d'utilisateur</th>
+                        <th>Utilisateur</th>
+                        <th>Rôle</th>
+                        <th>Statut</th>
                         <th>Action</th>
                     </tr>
 
@@ -64,17 +157,49 @@
                     <tr>
 
                         <td>
-                            {{ user[0] }}
+                            <span class="user-id">
+                                #{{ user[0] }}
+                            </span>
                         </td>
 
                         <td>
-                            {{ user[1] }}
+
+                            <div class="user-name">
+
+                                <div class="mini-avatar">
+                                    {{ user[1][0]|upper }}
+                                </div>
+
+                                <strong>
+                                    {{ user[1] }}
+                                </strong>
+
+                            </div>
+
+                        </td>
+
+                        <td>
+
+                            <span class="role-badge">
+                                Administrateur
+                            </span>
+
+                        </td>
+
+                        <td>
+
+                            <span class="active-badge">
+                                <span></span>
+                                Actif
+                            </span>
+
                         </td>
 
                         <td>
 
                             <a href="{{ url_for('delete_user', user_id=user[0]) }}"
-                               class="delete-btn">
+                               class="delete-btn"
+                               onclick="return confirm('Voulez-vous vraiment supprimer cet utilisateur ?');">
                                 Supprimer
                             </a>
 
@@ -86,7 +211,7 @@
 
                     <tr>
 
-                        <td colspan="3">
+                        <td colspan="5" class="empty-message">
                             Aucun utilisateur enregistré.
                         </td>
 
@@ -105,4 +230,5 @@
 </div>
 
 </body>
+
 </html>
