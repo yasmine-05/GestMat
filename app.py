@@ -1,10 +1,10 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, session
 import sqlite3
 
 app = Flask(__name__)
+app.secret_key = "gestmat-secret-key"
 
 DB_NAME = "database.db"
-
 
 def init_db():
     conn = sqlite3.connect(DB_NAME)
@@ -57,9 +57,51 @@ def init_db():
     conn.commit()
     conn.close()
 
-
 @app.route("/")
+def login_page():
+    return render_template("login.html")
+
+@app.route("/login", methods=["POST"])
+def login():
+
+    username = request.form.get("username")
+    password = request.form.get("password")
+
+    conn = sqlite3.connect(DB_NAME)
+    cursor = conn.cursor()
+
+    cursor.execute(
+        """
+        SELECT id, username
+        FROM users
+        WHERE username = ? AND password = ?
+        """,
+        (username, password)
+    )
+
+    user = cursor.fetchone()
+
+    conn.close()
+
+    if user:
+
+        session["user_id"] = user[0]
+        session["username"] = user[1]
+
+        return redirect(url_for("home"))
+
+    else:
+        return """
+        <h2>Identifiant ou mot de passe incorrect.</h2>
+        <a href="/">Retour à la connexion</a>
+        """
+
+@app.route("/dashboard")
 def home():
+
+    if "user_id" not in session:
+        return redirect(url_for("login_page"))
+
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
 
@@ -104,32 +146,19 @@ def home():
         recent_materials=recent_materials
     )
 
+@app.route("/logout")
+def logout():
 
-@app.route("/login", methods=["POST"])
-def login():
-    username = request.form.get("username")
-    password = request.form.get("password")
+    session.clear()
 
-    conn = sqlite3.connect(DB_NAME)
-    cursor = conn.cursor()
-
-    cursor.execute(
-        "SELECT * FROM users WHERE username = ? AND password = ?",
-        (username, password)
-    )
-
-    user = cursor.fetchone()
-
-    conn.close()
-
-    if user:
-        return redirect(url_for("home"))
-    else:
-        return "Wrong username or password"
-
+    return redirect(url_for("login_page"))
 
 @app.route("/materials")
 def materials():
+
+    if "user_id" not in session:
+        return redirect(url_for("login_page"))
+
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
 
@@ -148,9 +177,11 @@ def materials():
         materials=materials
     )
 
-
 @app.route("/add-material", methods=["GET", "POST"])
 def add_material():
+
+    if "user_id" not in session:
+        return redirect(url_for("login_page"))
 
     if request.method == "POST":
 
@@ -188,9 +219,11 @@ def add_material():
 
     return render_template("add_material.html")
 
-
 @app.route("/maintenance")
 def maintenance():
+
+    if "user_id" not in session:
+        return redirect(url_for("login_page"))
 
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
@@ -219,9 +252,11 @@ def maintenance():
         maintenances=maintenances
     )
 
-
 @app.route("/add-maintenance", methods=["GET", "POST"])
 def add_maintenance():
+
+    if "user_id" not in session:
+        return redirect(url_for("login_page"))
 
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
@@ -279,6 +314,9 @@ def add_maintenance():
 @app.route("/users")
 def users():
 
+    if "user_id" not in session:
+        return redirect(url_for("login_page"))
+
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
 
@@ -297,9 +335,11 @@ def users():
         users=users
     )
 
-
 @app.route("/delete-user/<int:user_id>")
 def delete_user(user_id):
+
+    if "user_id" not in session:
+        return redirect(url_for("login_page"))
 
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
@@ -313,7 +353,6 @@ def delete_user(user_id):
     conn.close()
 
     return redirect(url_for("users"))
-
 
 if __name__ == "__main__":
     init_db()
