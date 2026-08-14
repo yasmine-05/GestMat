@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Modifier maintenance - COLAIMO</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="add-material-page">
+
+    <div class="add-material-header">
+
+        <div>
+            <h1>Modifier maintenance</h1>
+
+            <p>
+                Modifier les informations de la maintenance.
+            </p>
+        </div>
+
+        <a href="{{ url_for('maintenance') }}" class="back-btn">
+            Retour aux maintenances
+        </a>
+
+    </div>
+
+
+    <div class="maintenance-form-card">
+
+        <h2>Informations de maintenance</h2>
+
+        <form method="POST"
+              action="{{ url_for('edit_maintenance', maintenance_id=maintenance[0]) }}">
+
+            <div class="form-group">
+
+                <label for="material_id">
+                    Matériel
+                </label>
+
+                <select id="material_id"
+                        name="material_id"
+                        required>
+
+                    <option value="">
+                        -- Sélectionner un matériel --
+                    </option>
+
+                    {% for material in materials %}
+
+                    <option value="{{ material[0] }}"
+                        {% if material[0] == maintenance[1] %}
+                            selected
+                        {% endif %}>
+
+                        {{ material[1] }} - {{ material[2] }} - {{ material[3] }}
+
+                    </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="type_maintenance">
+                    Type de maintenance
+                </label>
+
+                <select id="type_maintenance"
+                        name="type_maintenance"
+                        required>
+
+                    <option value="">
+                        -- Sélectionner --
+                    </option>
+
+                    <option value="Préventive"
+                        {% if maintenance[2] == "Préventive" %}
+                            selected
+                        {% endif %}>
+                        Préventive
+                    </option>
+
+                    <option value="Corrective"
+                        {% if maintenance[2] == "Corrective" %}
+                            selected
+                        {% endif %}>
+                        Corrective
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="date_maintenance">
+                    Date de maintenance
+                </label>
+
+                <input
+                    type="date"
+                    id="date_maintenance"
+                    name="date_maintenance"
+                    value="{{ maintenance[3] }}"
+                    required>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="statut">
+                    Statut
+                </label>
+
+                <select id="statut"
+                        name="statut"
+                        required>
+
+                    <option value="Planifiée"
+                        {% if maintenance[4] == "Planifiée" %}
+                            selected
+                        {% endif %}>
+                        Planifiée
+                    </option>
+
+                    <option value="En maintenance"
+                        {% if maintenance[4] == "En maintenance" %}
+                            selected
+                        {% endif %}>
+                        En maintenance
+                    </option>
+
+                    <option value="Terminée"
+                        {% if maintenance[4] == "Terminée" %}
+                            selected
+                        {% endif %}>
+                        Terminée
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="description">
+                    Description
+                </label>
+
+                <textarea
+                    id="description"
+                    name="description"
+                    rows="4"
+                    placeholder="Description de la maintenance...">{{ maintenance[5] or "" }}</textarea>
+
+            </div>
+
+
+            <div class="form-buttons">
+
+                <a href="{{ url_for('maintenance') }}"
+                   class="cancel-btn">
+                    Annuler
+                </a>
+
+                <button type="submit"
+                        class="submit-btn">
+                    Enregistrer les modifications
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+</html>

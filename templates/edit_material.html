@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Modifier matériel - GestMat</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="add-material-page">
+
+    <div class="add-material-header">
+
+        <div>
+            <h1>Modifier matériel</h1>
+
+            <p>
+                Modifier les informations du matériel.
+            </p>
+        </div>
+
+        <a href="{{ url_for('materials') }}" class="back-btn">
+            Retour aux matériels
+        </a>
+
+    </div>
+
+
+    <div class="add-material-card">
+
+        <h2>Informations du matériel</h2>
+
+        <form method="POST"
+              action="{{ url_for('edit_material', material_id=material[0]) }}">
+
+            <div class="form-grid">
+
+                <div class="form-field">
+
+                    <label for="type">
+                        Type de matériel
+                    </label>
+
+                    <select id="type" name="type" required>
+
+                        <option value="">-- Sélectionner --</option>
+
+                        <option value="Ordinateur"
+                            {% if material[1] == "Ordinateur" %}selected{% endif %}>
+                            Ordinateur
+                        </option>
+
+                        <option value="Écran"
+                            {% if material[1] == "Écran" %}selected{% endif %}>
+                            Écran
+                        </option>
+
+                        <option value="Clavier"
+                            {% if material[1] == "Clavier" %}selected{% endif %}>
+                            Clavier
+                        </option>
+
+                        <option value="Imprimante"
+                            {% if material[1] == "Imprimante" %}selected{% endif %}>
+                            Imprimante
+                        </option>
+
+                        <option value="Souris"
+                            {% if material[1] == "Souris" %}selected{% endif %}>
+                            Souris
+                        </option>
+
+                        <option value="Projecteur"
+                            {% if material[1] == "Projecteur" %}selected{% endif %}>
+                            Projecteur
+                        </option>
+
+                        <option value="Unité centrale"
+                            {% if material[1] == "Unité centrale" %}selected{% endif %}>
+                            Unité centrale
+                        </option>
+
+                        <option value="Routeur"
+                            {% if material[1] == "Routeur" %}selected{% endif %}>
+                            Routeur
+                        </option>
+
+                        <option value="Autre"
+                            {% if material[1] == "Autre" %}selected{% endif %}>
+                            Autre
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-field">
+
+                    <label for="reference">
+                        Référence
+                    </label>
+
+                    <input
+                        type="text"
+                        id="reference"
+                        name="reference"
+                        value="{{ material[2] }}"
+                        required>
+
+                </div>
+
+
+                <div class="form-field">
+
+                    <label for="marque">
+                        Marque
+                    </label>
+
+                    <input
+                        type="text"
+                        id="marque"
+                        name="marque"
+                        value="{{ material[3] }}"
+                        required>
+
+                </div>
+
+
+                <div class="form-field">
+
+                    <label for="date_achat">
+                        Date d'achat
+                    </label>
+
+                    <input
+                        type="date"
+                        id="date_achat"
+                        name="date_achat"
+                        value="{{ material[4] }}"
+                        required>
+
+                </div>
+
+
+                <div class="form-field">
+
+                    <label for="quantite">
+                        Quantité
+                    </label>
+
+                    <input
+                        type="number"
+                        id="quantite"
+                        name="quantite"
+                        value="{{ material[5] }}"
+                        min="1"
+                        required>
+
+                </div>
+
+            </div>
+
+
+            <div class="form-actions">
+
+                <a href="{{ url_for('materials') }}"
+                   class="cancel-btn">
+                    Annuler
+                </a>
+
+                <button type="submit"
+                        class="save-btn">
+                    Enregistrer les modifications
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+</html>

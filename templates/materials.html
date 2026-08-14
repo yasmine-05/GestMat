@@ -3,65 +3,136 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Matériels - COLAIMO</title>
+
     <link rel="stylesheet"
           href="{{ url_for('static', filename='style.css') }}">
 </head>
+
 <body>
+
 <div class="materials-page">
+
     <div class="materials-header">
+
         <div>
             <h1>Matériels</h1>
+
             <p>
                 Liste des matériels enregistrés dans COLAIMO.
             </p>
         </div>
+
         <a href="{{ url_for('home') }}" class="back-btn">
             Retour au tableau de bord
         </a>
+
     </div>
+
     <div class="materials-card">
+
         <div class="materials-card-header">
-            <h2>Liste des matériels</h2>
+
+            <div>
+                <h2>Liste des matériels</h2>
+            </div>
+
             <a href="{{ url_for('add_material') }}" class="add-btn">
                 + Ajouter matériel
             </a>
+
         </div>
+
         <div class="table-container">
+
             <table class="materials-table">
+
                 <thead>
+
                     <tr>
                         <th>Type</th>
                         <th>Référence</th>
                         <th>Marque</th>
                         <th>Date d'achat</th>
                         <th>Quantité</th>
+                        <th>Actions</th>
                     </tr>
+
                 </thead>
+
+
                 <tbody>
+
                     {% for material in materials %}
+
                     <tr>
-                        <td>{{ material[1] }}</td>
-                        <td>{{ material[2] }}</td>
-                        <td>{{ material[3] }}</td>
-                        <td>{{ material[4] }}</td>
+
                         <td>
+                            {{ material[1] }}
+                        </td>
+
+                        <td>
+                            {{ material[2] }}
+                        </td>
+
+                        <td>
+                            {{ material[3] }}
+                        </td>
+
+                        <td>
+                            {{ material[4] }}
+                        </td>
+
+                        <td>
+
                             <span class="quantity">
                                 {{ material[5] }}
                             </span>
+
                         </td>
+
+                        <td class="actions">
+
+                            <a
+                                href="{{ url_for('edit_material', material_id=material[0]) }}"
+                                class="edit-btn">
+                                Modifier
+                            </a>
+
+
+                            <a
+                                href="{{ url_for('delete_material', material_id=material[0]) }}"
+                                class="delete-btn"
+                                onclick="return confirm('Voulez-vous vraiment supprimer ce matériel ?');">
+                                Supprimer
+                            </a>
+
+                        </td>
+
                     </tr>
+
                     {% else %}
+
                     <tr>
-                        <td colspan="5" class="empty-message">
+
+                        <td colspan="6" class="empty-message">
                             Aucun matériel enregistré.
                         </td>
+
                     </tr>
+
                     {% endfor %}
+
                 </tbody>
+
             </table>
+
         </div>
+
     </div>
+
 </div>
+
 </body>
 </html>

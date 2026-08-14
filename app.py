@@ -2,11 +2,13 @@ from flask import Flask, render_template, request, redirect, url_for, session
 import sqlite3
 
 app = Flask(__name__)
+
 app.secret_key = "gestmat-secret-key"
 
 DB_NAME = "database.db"
 
 def init_db():
+
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
 
@@ -49,8 +51,12 @@ def init_db():
     count = cursor.fetchone()[0]
 
     if count == 0:
+
         cursor.execute(
-            "INSERT INTO users (username, password) VALUES (?, ?)",
+            """
+            INSERT INTO users (username, password)
+            VALUES (?, ?)
+            """,
             ("yasmineel", "1234")
         )
 
@@ -59,7 +65,9 @@ def init_db():
 
 @app.route("/")
 def login_page():
+
     return render_template("login.html")
+
 
 @app.route("/login", methods=["POST"])
 def login():
@@ -91,6 +99,7 @@ def login():
         return redirect(url_for("home"))
 
     else:
+
         return """
         <h2>Identifiant ou mot de passe incorrect.</h2>
         <a href="/">Retour à la connexion</a>
@@ -100,6 +109,7 @@ def login():
 def home():
 
     if "user_id" not in session:
+
         return redirect(url_for("login_page"))
 
     conn = sqlite3.connect(DB_NAME)
@@ -108,16 +118,19 @@ def home():
     cursor.execute(
         "SELECT COUNT(*) FROM materials"
     )
+
     total_materials = cursor.fetchone()[0]
 
     cursor.execute(
         "SELECT COALESCE(SUM(quantite), 0) FROM materials"
     )
+
     total_quantity = cursor.fetchone()[0]
 
     cursor.execute(
         "SELECT COUNT(*) FROM maintenance"
     )
+
     total_maintenance = cursor.fetchone()[0]
 
     cursor.execute("""
@@ -125,6 +138,7 @@ def home():
         FROM maintenance
         WHERE statut = 'En maintenance'
     """)
+
     materials_in_maintenance = cursor.fetchone()[0]
 
     cursor.execute("""
@@ -133,6 +147,7 @@ def home():
         ORDER BY id DESC
         LIMIT 6
     """)
+
     recent_materials = cursor.fetchall()
 
     conn.close()
@@ -157,6 +172,7 @@ def logout():
 def materials():
 
     if "user_id" not in session:
+
         return redirect(url_for("login_page"))
 
     conn = sqlite3.connect(DB_NAME)
@@ -181,6 +197,7 @@ def materials():
 def add_material():
 
     if "user_id" not in session:
+
         return redirect(url_for("login_page"))
 
     if request.method == "POST":
@@ -219,10 +236,91 @@ def add_material():
 
     return render_template("add_material.html")
 
+@app.route("/edit-material/<int:material_id>", methods=["GET", "POST"])
+def edit_material(material_id):
+
+    if "user_id" not in session:
+
+        return redirect(url_for("login_page"))
+
+    conn = sqlite3.connect(DB_NAME)
+    cursor = conn.cursor()
+
+    if request.method == "POST":
+
+        material_type = request.form.get("type")
+        reference = request.form.get("reference")
+        marque = request.form.get("marque")
+        date_achat = request.form.get("date_achat")
+        quantite = request.form.get("quantite")
+
+        cursor.execute("""
+            UPDATE materials
+            SET
+                type = ?,
+                reference = ?,
+                marque = ?,
+                date_achat = ?,
+                quantite = ?
+            WHERE id = ?
+        """, (
+            material_type,
+            reference,
+            marque,
+            date_achat,
+            quantite,
+            material_id
+        ))
+
+        conn.commit()
+        conn.close()
+
+        return redirect(url_for("materials"))
+
+    cursor.execute("""
+        SELECT *
+        FROM materials
+        WHERE id = ?
+    """, (material_id,))
+
+    material = cursor.fetchone()
+
+    conn.close()
+
+    if material is None:
+
+        return "Matériel introuvable."
+
+    return render_template(
+        "edit_material.html",
+        material=material
+    )
+
+@app.route("/delete-material/<int:material_id>")
+def delete_material(material_id):
+
+    if "user_id" not in session:
+
+        return redirect(url_for("login_page"))
+
+    conn = sqlite3.connect(DB_NAME)
+    cursor = conn.cursor()
+
+    cursor.execute(
+        "DELETE FROM materials WHERE id = ?",
+        (material_id,)
+    )
+
+    conn.commit()
+    conn.close()
+
+    return redirect(url_for("materials"))
+
 @app.route("/maintenance")
 def maintenance():
 
     if "user_id" not in session:
+
         return redirect(url_for("login_page"))
 
     conn = sqlite3.connect(DB_NAME)
@@ -256,6 +354,7 @@ def maintenance():
 def add_maintenance():
 
     if "user_id" not in session:
+
         return redirect(url_for("login_page"))
 
     conn = sqlite3.connect(DB_NAME)
@@ -311,10 +410,109 @@ def add_maintenance():
         materials=materials
     )
 
+@app.route(
+    "/edit-maintenance/<int:maintenance_id>",
+    methods=["GET", "POST"]
+)
+def edit_maintenance(maintenance_id):
+
+    if "user_id" not in session:
+
+        return redirect(url_for("login_page"))
+
+    conn = sqlite3.connect(DB_NAME)
+    cursor = conn.cursor()
+
+    if request.method == "POST":
+
+        material_id = request.form.get("material_id")
+        type_maintenance = request.form.get("type_maintenance")
+        date_maintenance = request.form.get("date_maintenance")
+        statut = request.form.get("statut")
+        description = request.form.get("description")
+
+        cursor.execute("""
+            UPDATE maintenance
+            SET
+                material_id = ?,
+                type_maintenance = ?,
+                date_maintenance = ?,
+                statut = ?,
+                description = ?
+            WHERE id = ?
+        """, (
+            material_id,
+            type_maintenance,
+            date_maintenance,
+            statut,
+            description,
+            maintenance_id
+        ))
+
+        conn.commit()
+        conn.close()
+
+        return redirect(url_for("maintenance"))
+
+    cursor.execute("""
+        SELECT *
+        FROM maintenance
+        WHERE id = ?
+    """, (maintenance_id,))
+
+    maintenance = cursor.fetchone()
+
+    if maintenance is None:
+
+        conn.close()
+
+        return "Maintenance introuvable."
+
+    cursor.execute("""
+        SELECT
+            id,
+            type,
+            reference,
+            marque
+        FROM materials
+        ORDER BY id DESC
+    """)
+
+    materials = cursor.fetchall()
+
+    conn.close()
+
+    return render_template(
+        "edit_maintenance.html",
+        maintenance=maintenance,
+        materials=materials
+    )
+
+@app.route("/delete-maintenance/<int:maintenance_id>")
+def delete_maintenance(maintenance_id):
+
+    if "user_id" not in session:
+
+        return redirect(url_for("login_page"))
+
+    conn = sqlite3.connect(DB_NAME)
+    cursor = conn.cursor()
+
+    cursor.execute(
+        "DELETE FROM maintenance WHERE id = ?",
+        (maintenance_id,)
+    )
+
+    conn.commit()
+    conn.close()
+
+    return redirect(url_for("maintenance"))
+
 @app.route("/users")
 def users():
 
     if "user_id" not in session:
+
         return redirect(url_for("login_page"))
 
     conn = sqlite3.connect(DB_NAME)
@@ -335,10 +533,57 @@ def users():
         users=users
     )
 
+@app.route("/add-user", methods=["GET", "POST"])
+def add_user():
+
+    if "user_id" not in session:
+
+        return redirect(url_for("login_page"))
+
+    if request.method == "POST":
+
+        username = request.form.get("username")
+        password = request.form.get("password")
+
+        conn = sqlite3.connect(DB_NAME)
+        cursor = conn.cursor()
+
+        cursor.execute(
+            "SELECT id FROM users WHERE username = ?",
+            (username,)
+        )
+
+        existing_user = cursor.fetchone()
+
+        if existing_user:
+
+            conn.close()
+
+            return """
+            <h2>Ce nom d'utilisateur existe déjà.</h2>
+            <a href="/add-user">Retour</a>
+            """
+
+        cursor.execute(
+            """
+            INSERT INTO users (username, password)
+            VALUES (?, ?)
+            """,
+            (username, password)
+        )
+
+        conn.commit()
+        conn.close()
+
+        return redirect(url_for("users"))
+
+    return render_template("add_user.html")
+
 @app.route("/delete-user/<int:user_id>")
 def delete_user(user_id):
 
     if "user_id" not in session:
+
         return redirect(url_for("login_page"))
 
     conn = sqlite3.connect(DB_NAME)
@@ -355,7 +600,7 @@ def delete_user(user_id):
     return redirect(url_for("users"))
 
 if __name__ == "__main__":
+
     init_db()
+
     app.run(debug=True)
-
-

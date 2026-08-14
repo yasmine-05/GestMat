@@ -1264,3 +1264,62 @@ th {
         justify-content: center;
     }
 }
+
+.actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.edit-btn,
+.delete-btn {
+    display: inline-block;
+    padding: 7px 12px;
+    border-radius: 7px;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 600;
+    transition: 0.2s ease;
+}
+
+.edit-btn {
+    background: #eaf4ec;
+    color: #287a46;
+    border: 1px solid #d5e8d9;
+}
+
+.edit-btn:hover {
+    background: #287a46;
+    color: white;
+}
+
+.delete-btn {
+    background: #fff1f1;
+    color: #c54b4b;
+    border: 1px solid #f0d5d5;
+}
+
+.delete-btn:hover {
+    background: #c54b4b;
+    color: white;
+}
+
+.sidebar-footer a {
+    display: block;
+    width: 100%;
+    padding: 12px 16px;
+    margin-top: 10px;
+    background: #f5f5f5;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    color: #d9534f;
+    text-decoration: none;
+    text-align: center;
+    font-weight: 600;
+    transition: 0.2s ease;
+}
+
+.sidebar-footer a:hover {
+    background: #ffecec;
+    border-color: #d9534f;
+}
