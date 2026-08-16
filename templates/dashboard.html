@@ -1,460 +1,485 @@
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Dashboard - COLAIMO</title>
-
     <link rel="stylesheet"
           href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        /* Dashboard card status */
+        .card-status {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+        .status-active {
+            background: #eaf6ed;
+            color: #287a46;
+        }
+        .status-stock {
+            background: #fff8dc;
+            color: #a67d00;
+        }
+        .status-maintenance {
+            background: #eaf2f8;
+            color: #39749f;
+        }
+        .card-status .status-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .status-active .status-dot {
+            background: #43a960;
+        }
+        .status-stock .status-dot {
+            background: #e0b52f;
+        }
+        .status-maintenance .status-dot {
+            background: #39749f;
+        }
+        /* Percentage area */
+        .card-percentage {
+            margin-top: 15px;
+        }
+        .percentage-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 7px;
+        }
+        .percentage-label {
+            color: #8a938d;
+            font-size: 11px;
+        }
+        .percentage-value {
+            color: #287a46;
+            font-size: 12px;
+            font-weight: 700;
+        }
+        .percentage-bar {
+            width: 100%;
+            height: 7px;
+            background: #edf1ee;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .percentage-fill {
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+        .percentage-fill.green {
+            background: #287a46;
+        }
+        .percentage-fill.yellow {
+            background: #e0b52f;
+        }
+        .percentage-fill.blue {
+            background: #39749f;
+        }
+    </style>
 </head>
-
 <body>
-
 <div class="dashboard-container">
-
     <aside class="sidebar">
-
         <div class="logo">
             <img src="{{ url_for('static', filename='logo.png') }}"
                  alt="COLAIMO Logo">
         </div>
-
         <nav class="menu">
-
             <a href="{{ url_for('home') }}"
                class="menu-item active">
                 Tableau de bord
             </a>
-
             <a href="{{ url_for('materials') }}"
                class="menu-item">
                 Matériels
             </a>
-
             <a href="{{ url_for('add_material') }}"
                class="menu-item">
                 Ajouter matériel
             </a>
-
             <a href="{{ url_for('maintenance') }}"
                class="menu-item">
                 Maintenance
             </a>
-
             <a href="{{ url_for('users') }}"
                class="menu-item">
                 Utilisateurs
             </a>
-
         </nav>
-
         <div class="sidebar-footer">
-
             <p>Yasmine</p>
-
             <a href="{{ url_for('logout') }}">
                 Déconnexion
             </a>
-
         </div>
-
     </aside>
-
-
     <main class="content">
-
         <header class="dashboard-header">
-
             <div>
-
                 <h1>
                     Tableau de bord
                 </h1>
-
                 <p>
                     Bienvenue dans votre espace de gestion COLAIMO
                 </p>
-
             </div>
-
             <div class="user-info">
-
                 <span>
                     Bonjour,
                 </span>
-
                 <strong>
                     Yasmine
                 </strong>
-
             </div>
-
         </header>
-
+        <!-- =========================
+             STATISTICS CARDS
+        ========================== -->
         <section class="cards">
-
+            <!-- TOTAL MATÉRIELS -->
             <div class="card-box">
-
                 <div class="card-top">
-
                     <div class="card-icon blue">
                     </div>
-
-                    <div class="circle">
-
-                        <span>100%</span>
-
+                    <div class="card-status status-active">
+                        <span class="status-dot"></span>
+                        Actif
                     </div>
-
                 </div>
-
                 <h3>
                     Total matériels
                 </h3>
-
                 <h2>
                     {{ total_materials }}
                 </h2>
-
                 <p>
                     Dans l'inventaire
                 </p>
-
+                <div class="card-percentage">
+                    <div class="percentage-header">
+                        <span class="percentage-label">
+                            État de l'inventaire
+                        </span>
+                        <span class="percentage-value">
+                            <span id="active-percentage">100</span>%
+                        </span>
+                    </div>
+                    <div class="percentage-bar">
+                        <div
+                            class="percentage-fill green"
+                            id="active-bar"
+                            style="width: 100%;">
+                        </div>
+                    </div>
+                </div>
             </div>
-
+            <!-- QUANTITÉ TOTALE -->
             <div class="card-box">
-
                 <div class="card-top">
-
                     <div class="card-icon red">
                     </div>
-
-                    <div class="circle">
-
-                        <span>100%</span>
-
+                    <div class="card-status status-stock">
+                        <span class="status-dot"></span>
+                        Stock
                     </div>
-
                 </div>
-
                 <h3>
                     Quantité totale
                 </h3>
-
                 <h2>
                     {{ total_quantity }}
                 </h2>
-
                 <p>
                     Quantité totale enregistrée
                 </p>
-
+                <div class="card-percentage">
+                    <div class="percentage-header">
+                        <span class="percentage-label">
+                            Stock enregistré
+                        </span>
+                        <span class="percentage-value">
+                            100%
+                        </span>
+                    </div>
+                    <div class="percentage-bar">
+                        <div
+                            class="percentage-fill yellow"
+                            style="width: 100%;">
+                        </div>
+                    </div>
+                </div>
             </div>
-
+            <!-- EN MAINTENANCE -->
             <div class="card-box">
-
                 <div class="card-top">
-
                     <div class="card-icon green">
                     </div>
-
-                    <div class="circle">
-
-                        <span>100%</span>
-
+                    <div class="card-status status-maintenance">
+                        <span class="status-dot"></span>
+                        Suivi
                     </div>
-
                 </div>
-
                 <h3>
                     En maintenance
                 </h3>
-
                 <h2>
                     {{ materials_in_maintenance }}
                 </h2>
-
                 <p>
                     Matériels actuellement en maintenance
                 </p>
-
+                <div class="card-percentage">
+                    <div class="percentage-header">
+                        <span class="percentage-label">
+                            Part en maintenance
+                        </span>
+                        <span class="percentage-value">
+                            <span id="maintenance-percentage">0</span>%
+                        </span>
+                    </div>
+                    <div class="percentage-bar">
+                        <div
+                            class="percentage-fill blue"
+                            id="maintenance-bar"
+                            style="width: 0%;">
+                        </div>
+                    </div>
+                </div>
             </div>
-
-
         </section>
-
+        <!-- =========================
+             LOWER DASHBOARD
+        ========================== -->
         <section class="dashboard-grid">
-
+            <!-- RECENT MATERIALS -->
             <div class="recent-orders">
-
                 <div class="section-title">
-
                     <h2>
                         Matériels récents
                     </h2>
-
                     <a href="{{ url_for('materials') }}"
                        class="section-link">
                         Voir tout
                     </a>
-
                 </div>
-
-
                 <div class="table-container">
-
                     <table>
-
                         <thead>
-
                             <tr>
-
                                 <th>
                                     Nom du matériel
                                 </th>
-
                                 <th>
                                     Référence
                                 </th>
-
                                 <th>
                                     Marque
                                 </th>
-
                                 <th>
                                     Date d'achat
                                 </th>
-
                                 <th>
                                     Quantité
                                 </th>
-
                             </tr>
-
                         </thead>
-
-
                         <tbody>
-
                             {% for material in recent_materials %}
-
                             <tr>
-
                                 <td>
                                     {{ material[1] }}
                                 </td>
-
                                 <td>
                                     {{ material[2] }}
                                 </td>
-
                                 <td>
                                     {{ material[3] }}
                                 </td>
-
                                 <td>
                                     {{ material[4] }}
                                 </td>
-
                                 <td>
                                     {{ material[5] }}
                                 </td>
-
                             </tr>
-
                             {% else %}
-
                             <tr>
-
                                 <td colspan="5">
                                     Aucun matériel enregistré.
                                 </td>
-
                             </tr>
-
                             {% endfor %}
-
                         </tbody>
-
                     </table>
-
                 </div>
-
             </div>
-
+            <!-- RIGHT SIDE -->
             <div class="right-side">
-
+                <!-- UPDATES -->
                 <div class="updates">
-
                     <h2>
                         Dernières mises à jour
                     </h2>
-
-
                     <div class="update-item">
-
                         <div class="update-icon">
                         </div>
-
                         <div>
-
                             <strong>
                                 Gestion des matériels
                             </strong>
-
                             <p>
                                 Consultez ou ajoutez des matériels.
                             </p>
-
                             <small>
                                 Inventaire
                             </small>
-
                         </div>
-
                     </div>
-
-
                     <div class="update-item">
-
                         <div class="update-icon">
                         </div>
-
                         <div>
-
                             <strong>
                                 Maintenance
                             </strong>
-
                             <p>
                                 Suivez les opérations de maintenance.
                             </p>
-
                             <small>
                                 Maintenance
                             </small>
-
                         </div>
-
                     </div>
-
-
                     <div class="update-item">
-
                         <div class="update-icon">
                         </div>
-
                         <div>
-
                             <strong>
                                 Inventaire
                             </strong>
-
                             <p>
                                 Les informations sont enregistrées dans la base de données.
                             </p>
-
                             <small>
                                 COLAIMO
                             </small>
-
                         </div>
-
                     </div>
-
                 </div>
-
+                <!-- ANALYTICS -->
                 <div class="analytics">
-
                     <h2>
                         Analyse
                     </h2>
-
                     <div class="analytics-item">
-
                         <div class="analytics-icon blue">
                         </div>
-
                         <div class="analytics-text">
-
                             <strong>
                                 Matériels disponibles
                             </strong>
-
                             <small>
                                 Total des quantités enregistrées
                             </small>
-
                         </div>
-
                         <strong>
                             {{ total_quantity }}
                         </strong>
-
                     </div>
-
                     <div class="analytics-item">
-
                         <div class="analytics-icon red">
                         </div>
-
                         <div class="analytics-text">
-
                             <strong>
                                 En maintenance
                             </strong>
-
                             <small>
                                 Matériels actuellement en maintenance
                             </small>
-
                         </div>
-
                         <strong>
                             {{ materials_in_maintenance }}
                         </strong>
-
                     </div>
-
                     <div class="analytics-item">
-
                         <div class="analytics-icon green">
                         </div>
-
                         <div class="analytics-text">
-
                             <strong>
                                 Matériels enregistrés
                             </strong>
-
                             <small>
                                 Total dans l'inventaire
                             </small>
-
                         </div>
-
                         <strong>
                             {{ total_materials }}
                         </strong>
-
                     </div>
-
                 </div>
-
             </div>
-
         </section>
-
     </main>
-
 </div>
-
-
+<script>
+    /*
+     * Calculate the percentage of materials
+     * currently in maintenance.
+     */
+    const totalMaterials =
+        Number("{{ total_materials }}") || 0;
+    const maintenanceMaterials =
+        Number("{{ materials_in_maintenance }}") || 0;
+    let maintenancePercentage = 0;
+    if (totalMaterials > 0) {
+        maintenancePercentage =
+            Math.round(
+                (maintenanceMaterials / totalMaterials) * 100
+            );
+    }
+    /*
+     * Active percentage:
+     * materials that are NOT in maintenance.
+     */
+    let activePercentage = 100;
+    if (totalMaterials > 0) {
+        activePercentage =
+            Math.round(
+                ((totalMaterials - maintenanceMaterials)
+                / totalMaterials) * 100
+            );
+    }
+    /*
+     * Keep percentages between 0 and 100.
+     */
+    activePercentage =
+        Math.max(0, Math.min(100, activePercentage));
+    maintenancePercentage =
+        Math.max(0, Math.min(100, maintenancePercentage));
+    /*
+     * Update the displayed percentages.
+     */
+    document.getElementById("active-percentage").textContent =
+        activePercentage;
+    document.getElementById("maintenance-percentage").textContent =
+        maintenancePercentage;
+    /*
+     * Update progress bars.
+     */
+    document.getElementById("active-bar").style.width =
+        activePercentage + "%";
+    document.getElementById("maintenance-bar").style.width =
+        maintenancePercentage + "%";
+</script>
 <script src="{{ url_for('static', filename='dashboard.js') }}"></script>
-
 </body>
-
 </html>

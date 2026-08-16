@@ -250,7 +250,9 @@ body {
 }
 
 
-/* STATISTICS CARDS */
+/* =========================
+   STATISTICS CARDS
+========================= */
 
 .cards {
     display: grid;
@@ -299,6 +301,9 @@ body {
     align-items: center;
 }
 
+
+/* CARD ICON */
+
 .card-icon {
     width: 48px;
     height: 48px;
@@ -324,35 +329,57 @@ body {
 }
 
 
-/* PERCENTAGE CIRCLE */
+/* =========================
+   STATISTIC CIRCLE
+========================= */
 
-.circle {
+.circle-value {
     width: 62px;
     height: 62px;
-    border: 6px solid #287a46;
-    border-left-color: #e3e9e4;
     border-radius: 50%;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: #ffffff;
+    background: #eaf4ec;
+    border: 3px solid #287a46;
+    color: #287a46;
+    flex-shrink: 0;
+    line-height: 1;
 }
 
-.card-box:nth-child(2) .circle {
-    border-color: #e0b52f;
-    border-left-color: #eee9d5;
+.circle-value span {
+    display: block;
+    font-size: 17px;
+    font-weight: 800;
 }
 
-.card-box:nth-child(3) .circle {
-    border-color: #39749f;
-    border-left-color: #e2e9ee;
-}
-
-.circle span {
-    font-size: 11px;
+.circle-value small {
+    display: block;
+    margin-top: 4px;
+    font-size: 10px;
     font-weight: 700;
-    color: #4c5750;
+    color: inherit;
 }
+
+
+/* SECOND CARD */
+
+.card-box:nth-child(2) .circle-value {
+    background: #fff8dc;
+    border-color: #e0b52f;
+    color: #a67d00;
+}
+
+
+/* THIRD CARD */
+
+.card-box:nth-child(3) .circle-value {
+    background: #eaf2f8;
+    border-color: #39749f;
+    color: #39749f;
+}
+
 
 .card-box h3 {
     margin-top: 20px;
@@ -372,7 +399,9 @@ body {
 }
 
 
-/* DASHBOARD LOWER AREA */
+/* =========================
+   DASHBOARD LOWER AREA
+========================= */
 
 .dashboard-grid {
     display: grid;
@@ -1336,7 +1365,9 @@ tbody tr:hover {
 }
 
 
-/* ACTION BUTTONS */
+/* =========================
+   ACTION BUTTONS
+========================= */
 
 .actions {
     display: flex;
