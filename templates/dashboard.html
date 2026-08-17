@@ -6,88 +6,10 @@
     <title>Dashboard - COLAIMO</title>
     <link rel="stylesheet"
           href="{{ url_for('static', filename='style.css') }}">
-    <style>
-        /* Dashboard card status */
-        .card-status {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            padding: 6px 10px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: 700;
-        }
-        .status-active {
-            background: #eaf6ed;
-            color: #287a46;
-        }
-        .status-stock {
-            background: #fff8dc;
-            color: #a67d00;
-        }
-        .status-maintenance {
-            background: #eaf2f8;
-            color: #39749f;
-        }
-        .card-status .status-dot {
-            width: 7px;
-            height: 7px;
-            border-radius: 50%;
-            display: inline-block;
-        }
-        .status-active .status-dot {
-            background: #43a960;
-        }
-        .status-stock .status-dot {
-            background: #e0b52f;
-        }
-        .status-maintenance .status-dot {
-            background: #39749f;
-        }
-        /* Percentage area */
-        .card-percentage {
-            margin-top: 15px;
-        }
-        .percentage-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 7px;
-        }
-        .percentage-label {
-            color: #8a938d;
-            font-size: 11px;
-        }
-        .percentage-value {
-            color: #287a46;
-            font-size: 12px;
-            font-weight: 700;
-        }
-        .percentage-bar {
-            width: 100%;
-            height: 7px;
-            background: #edf1ee;
-            border-radius: 10px;
-            overflow: hidden;
-        }
-        .percentage-fill {
-            height: 100%;
-            border-radius: 10px;
-            transition: width 0.5s ease;
-        }
-        .percentage-fill.green {
-            background: #287a46;
-        }
-        .percentage-fill.yellow {
-            background: #e0b52f;
-        }
-        .percentage-fill.blue {
-            background: #39749f;
-        }
-    </style>
 </head>
 <body>
 <div class="dashboard-container">
+    
     <aside class="sidebar">
         <div class="logo">
             <img src="{{ url_for('static', filename='logo.png') }}"
@@ -122,7 +44,9 @@
             </a>
         </div>
     </aside>
+    
     <main class="content">
+        
         <header class="dashboard-header">
             <div>
                 <h1>
@@ -141,11 +65,9 @@
                 </strong>
             </div>
         </header>
-        <!-- =========================
-             STATISTICS CARDS
-        ========================== -->
+      
         <section class="cards">
-            <!-- TOTAL MATÉRIELS -->
+            
             <div class="card-box">
                 <div class="card-top">
                     <div class="card-icon blue">
@@ -164,25 +86,26 @@
                 <p>
                     Dans l'inventaire
                 </p>
+               
                 <div class="card-percentage">
                     <div class="percentage-header">
                         <span class="percentage-label">
                             État de l'inventaire
                         </span>
                         <span class="percentage-value">
-                            <span id="active-percentage">100</span>%
+                            <span id="active-percentage">0</span>%
                         </span>
                     </div>
                     <div class="percentage-bar">
                         <div
                             class="percentage-fill green"
                             id="active-bar"
-                            style="width: 100%;">
+                            style="width: 0%;">
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- QUANTITÉ TOTALE -->
+            
             <div class="card-box">
                 <div class="card-top">
                     <div class="card-icon red">
@@ -201,13 +124,14 @@
                 <p>
                     Quantité totale enregistrée
                 </p>
+                
                 <div class="card-percentage">
                     <div class="percentage-header">
                         <span class="percentage-label">
                             Stock enregistré
                         </span>
                         <span class="percentage-value">
-                            100%
+                            {{ total_quantity }} unités
                         </span>
                     </div>
                     <div class="percentage-bar">
@@ -218,7 +142,7 @@
                     </div>
                 </div>
             </div>
-            <!-- EN MAINTENANCE -->
+            
             <div class="card-box">
                 <div class="card-top">
                     <div class="card-icon green">
@@ -237,6 +161,7 @@
                 <p>
                     Matériels actuellement en maintenance
                 </p>
+                
                 <div class="card-percentage">
                     <div class="percentage-header">
                         <span class="percentage-label">
@@ -256,11 +181,9 @@
                 </div>
             </div>
         </section>
-        <!-- =========================
-             LOWER DASHBOARD
-        ========================== -->
+        
         <section class="dashboard-grid">
-            <!-- RECENT MATERIALS -->
+            
             <div class="recent-orders">
                 <div class="section-title">
                     <h2>
@@ -322,9 +245,9 @@
                     </table>
                 </div>
             </div>
-            <!-- RIGHT SIDE -->
+            
             <div class="right-side">
-                <!-- UPDATES -->
+                
                 <div class="updates">
                     <h2>
                         Dernières mises à jour
@@ -375,7 +298,7 @@
                         </div>
                     </div>
                 </div>
-                <!-- ANALYTICS -->
+                
                 <div class="analytics">
                     <h2>
                         Analyse
@@ -430,11 +353,8 @@
         </section>
     </main>
 </div>
+
 <script>
-    /*
-     * Calculate the percentage of materials
-     * currently in maintenance.
-     */
     const totalMaterials =
         Number("{{ total_materials }}") || 0;
     const maintenanceMaterials =
@@ -446,38 +366,41 @@
                 (maintenanceMaterials / totalMaterials) * 100
             );
     }
-    /*
-     * Active percentage:
-     * materials that are NOT in maintenance.
-     */
-    let activePercentage = 100;
+    let activePercentage = 0;
     if (totalMaterials > 0) {
         activePercentage =
             Math.round(
-                ((totalMaterials - maintenanceMaterials)
-                / totalMaterials) * 100
+                (
+                    (totalMaterials - maintenanceMaterials)
+                    / totalMaterials
+                ) * 100
             );
     }
-    /*
-     * Keep percentages between 0 and 100.
-     */
     activePercentage =
-        Math.max(0, Math.min(100, activePercentage));
+        Math.max(
+            0,
+            Math.min(100, activePercentage)
+        );
     maintenancePercentage =
-        Math.max(0, Math.min(100, maintenancePercentage));
-    /*
-     * Update the displayed percentages.
-     */
-    document.getElementById("active-percentage").textContent =
+        Math.max(
+            0,
+            Math.min(100, maintenancePercentage)
+        );
+    document.getElementById(
+        "active-percentage"
+    ).textContent =
         activePercentage;
-    document.getElementById("maintenance-percentage").textContent =
+    document.getElementById(
+        "maintenance-percentage"
+    ).textContent =
         maintenancePercentage;
-    /*
-     * Update progress bars.
-     */
-    document.getElementById("active-bar").style.width =
+    document.getElementById(
+        "active-bar"
+    ).style.width =
         activePercentage + "%";
-    document.getElementById("maintenance-bar").style.width =
+    document.getElementById(
+        "maintenance-bar"
+    ).style.width =
         maintenancePercentage + "%";
 </script>
 <script src="{{ url_for('static', filename='dashboard.js') }}"></script>
