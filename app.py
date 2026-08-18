@@ -10,7 +10,8 @@ def init_db():
         CREATE TABLE IF NOT EXISTS users (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             username TEXT NOT NULL,
-            password TEXT NOT NULL
+            password TEXT NOT NULL,
+            status TEXT NOT NULL DEFAULT 'En attente'
         )
     """)
     cursor.execute("""
