@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Utilisateurs - COLAIMO</title>
+    <title>Administrateur - COLAIMO</title>
 
     <link rel="stylesheet"
           href="{{ url_for('static', filename='style.css') }}">
@@ -20,10 +20,11 @@
         <div>
             <p class="page-label">ADMINISTRATION</p>
 
-            <h1>Gestion des utilisateurs</h1>
+            <h1>Compte administrateur</h1>
 
             <p>
-                Gérez les personnes qui ont accès à votre espace COLAIMO.
+                Consultez les informations du compte qui permet
+                d'accéder à l'application COLAIMO.
             </p>
         </div>
 
@@ -32,6 +33,7 @@
         </a>
 
     </div>
+
 
     <div class="user-stats">
 
@@ -42,11 +44,11 @@
             </div>
 
             <div>
-                <span>Utilisateurs</span>
+                <span>Compte</span>
 
-                <strong>{{ users|length }}</strong>
+                <strong>1</strong>
 
-                <small>Comptes enregistrés</small>
+                <small>Compte administrateur</small>
             </div>
 
         </div>
@@ -59,9 +61,9 @@
             </div>
 
             <div>
-                <span>Administrateurs</span>
+                <span>Rôle</span>
 
-                <strong>{{ users|length }}</strong>
+                <strong>Admin</strong>
 
                 <small>Accès administrateur</small>
             </div>
@@ -76,16 +78,17 @@
             </div>
 
             <div>
-                <span>Accès actifs</span>
+                <span>Statut</span>
 
-                <strong>{{ users|length }}</strong>
+                <strong>Actif</strong>
 
-                <small>Utilisateurs actifs</small>
+                <small>Accès autorisé</small>
             </div>
 
         </div>
 
     </div>
+
 
     <div class="admin-profile">
 
@@ -114,21 +117,19 @@
 
     </div>
 
+
     <div class="users-card">
 
         <div class="users-card-header">
 
             <div>
-                <h2>Utilisateurs du système</h2>
+                <h2>Informations du compte</h2>
 
                 <p>
-                    Comptes ayant accès à l'application COLAIMO.
+                    Ce compte est utilisé pour accéder à l'application
+                    COLAIMO.
                 </p>
             </div>
-
-            <a href="{{ url_for('add_user' )}}" class="add-btn">
-                + Ajouter utilisateur
-            </a>
 
         </div>
 
@@ -140,11 +141,8 @@
                 <thead>
 
                     <tr>
-                        <th>ID</th>
-                        <th>Utilisateur</th>
-                        <th>Rôle</th>
-                        <th>Statut</th>
-                        <th>Action</th>
+                        <th>Information</th>
+                        <th>Détail</th>
                     </tr>
 
                 </thead>
@@ -152,30 +150,23 @@
 
                 <tbody>
 
-                    {% for user in users %}
+                    <tr>
+
+                        <td>
+                            <strong>Nom d'utilisateur</strong>
+                        </td>
+
+                        <td>
+                            yasmineel
+                        </td>
+
+                    </tr>
+
 
                     <tr>
 
                         <td>
-                            <span class="user-id">
-                                #{{ user[0] }}
-                            </span>
-                        </td>
-
-                        <td>
-
-                            <div class="user-name">
-
-                                <div class="mini-avatar">
-                                    {{ user[1][0]|upper }}
-                                </div>
-
-                                <strong>
-                                    {{ user[1] }}
-                                </strong>
-
-                            </div>
-
+                            <strong>Rôle</strong>
                         </td>
 
                         <td>
@@ -184,6 +175,15 @@
                                 Administrateur
                             </span>
 
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
+                            <strong>Statut</strong>
                         </td>
 
                         <td>
@@ -195,29 +195,20 @@
 
                         </td>
 
-                        <td>
-
-                            <a href="{{ url_for('delete_user', user_id=user[0]) }}"
-                               class="delete-btn"
-                               onclick="return confirm('Voulez-vous vraiment supprimer cet utilisateur ?');">
-                                Supprimer
-                            </a>
-
-                        </td>
-
                     </tr>
 
-                    {% else %}
 
                     <tr>
 
-                        <td colspan="5" class="empty-message">
-                            Aucun utilisateur enregistré.
+                        <td>
+                            <strong>Accès</strong>
+                        </td>
+
+                        <td>
+                            Administration complète
                         </td>
 
                     </tr>
-
-                    {% endfor %}
 
                 </tbody>
 
