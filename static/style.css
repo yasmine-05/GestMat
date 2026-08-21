@@ -9,10 +9,6 @@ body {
     background: #f5f6f8;
 }
 
-/* =========================
-   LOGIN PAGE
-========================= */
-
 .login-page {
     min-height: 100vh;
     display: flex;
@@ -92,11 +88,6 @@ body {
 .login-page .submit-btn:hover {
     background: #1b5e20;
 }
-
-
-/* =========================
-   DASHBOARD
-========================= */
 
 .dashboard-container {
     display: flex;
@@ -237,11 +228,6 @@ body {
     margin-left: 4px;
 }
 
-
-/* =========================
-   DASHBOARD STAT CARDS
-========================= */
-
 .cards {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -290,17 +276,11 @@ body {
     box-shadow: 0 14px 30px rgba(31, 65, 43, 0.10);
 }
 
-
-/* Card top */
-
 .card-top {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
-
-
-/* Card icons */
 
 .card-icon {
     width: 48px;
@@ -335,9 +315,6 @@ body {
 .card-icon span {
     line-height: 1;
 }
-
-
-/* Status */
 
 .card-status {
     display: flex;
@@ -376,9 +353,6 @@ body {
     background: currentColor;
 }
 
-
-/* Card text */
-
 .card-box h3 {
     margin-top: 18px;
 
@@ -403,9 +377,6 @@ body {
     font-size: 12px;
     line-height: 1.5;
 }
-
-
-/* Percentage */
 
 .card-percentage {
     margin-top: auto;
@@ -465,9 +436,6 @@ body {
     background: #39749f;
 }
 
-
-/* Old circle styles kept */
-
 .circle-value {
     width: 62px;
     height: 62px;
@@ -517,11 +485,6 @@ body {
     border-color: #39749f;
     color: #39749f;
 }
-
-
-/* =========================
-   DASHBOARD LOWER SECTION
-========================= */
 
 .dashboard-grid {
     display: grid;
@@ -591,11 +554,6 @@ td {
 tbody tr:hover {
     background: #fffef8;
 }
-
-
-/* =========================
-   RIGHT SIDE
-========================= */
 
 .right-side {
     display: flex;
@@ -702,11 +660,6 @@ tbody tr:hover {
 .negative {
     color: #d9534f;
 }
-
-
-/* =========================
-   MATERIALS PAGE
-========================= */
 
 .materials-page {
     min-height: 100vh;
@@ -860,11 +813,6 @@ tbody tr:hover {
     color: #999 !important;
 }
 
-
-/* =========================
-   ADD MATERIAL PAGE
-========================= */
-
 .add-material-page {
     min-height: 100vh;
 
@@ -1016,11 +964,6 @@ tbody tr:hover {
 .save-btn:hover {
     background: #1b5e20;
 }
-
-
-/* =========================
-   MAINTENANCE PAGE
-========================= */
 
 .maintenance-page {
     min-height: 100vh;
@@ -1249,11 +1192,6 @@ tbody tr:hover {
 .maintenance-card-header .add-btn:hover {
     background: #1b5e20;
 }
-
-
-/* =========================
-   USERS PAGE
-========================= */
 
 .users-page {
     min-height: 100vh;
@@ -1841,11 +1779,6 @@ tbody tr:hover {
 
     color: white;
 }
-
-
-/* =========================
-   RESPONSIVE
-========================= */
 
 @media (max-width: 900px) {
 

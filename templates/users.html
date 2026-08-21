@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Administrateur - COLAIMO</title>
+    <title>Utilisateur - COLAIMO</title>
 
     <link rel="stylesheet"
           href="{{ url_for('static', filename='style.css') }}">
@@ -15,6 +15,7 @@
 
 <div class="users-page">
 
+    <!-- HEADER -->
     <div class="users-header">
 
         <div>
@@ -23,8 +24,8 @@
             <h1>Compte administrateur</h1>
 
             <p>
-                Consultez les informations du compte qui permet
-                d'accéder à l'application COLAIMO.
+                Consultez les informations du compte administrateur
+                de l'application COLAIMO.
             </p>
         </div>
 
@@ -35,61 +36,7 @@
     </div>
 
 
-    <div class="user-stats">
-
-        <div class="user-stat-card green-stat">
-
-            <div class="stat-icon">
-                U
-            </div>
-
-            <div>
-                <span>Compte</span>
-
-                <strong>1</strong>
-
-                <small>Compte administrateur</small>
-            </div>
-
-        </div>
-
-
-        <div class="user-stat-card yellow-stat">
-
-            <div class="stat-icon">
-                A
-            </div>
-
-            <div>
-                <span>Rôle</span>
-
-                <strong>Admin</strong>
-
-                <small>Accès administrateur</small>
-            </div>
-
-        </div>
-
-
-        <div class="user-stat-card blue-stat">
-
-            <div class="stat-icon">
-                A
-            </div>
-
-            <div>
-                <span>Statut</span>
-
-                <strong>Actif</strong>
-
-                <small>Accès autorisé</small>
-            </div>
-
-        </div>
-
-    </div>
-
-
+    <!-- ADMINISTRATOR PROFILE -->
     <div class="admin-profile">
 
         <div class="profile-avatar">
@@ -102,7 +49,7 @@
                 COMPTE ADMINISTRATEUR
             </span>
 
-            <h2>Yasmine</h2>
+            <h2>Yasmine El Kadouri</h2>
 
             <p>
                 yasmineel
@@ -110,24 +57,19 @@
 
         </div>
 
-        <div class="profile-status">
-            <span class="status-dot"></span>
-            Actif
-        </div>
-
     </div>
 
 
+    <!-- PERSONAL INFORMATION -->
     <div class="users-card">
 
         <div class="users-card-header">
 
             <div>
-                <h2>Informations du compte</h2>
+                <h2>Informations personnelles</h2>
 
                 <p>
-                    Ce compte est utilisé pour accéder à l'application
-                    COLAIMO.
+                    Informations relatives au compte administrateur.
                 </p>
             </div>
 
@@ -153,11 +95,63 @@
                     <tr>
 
                         <td>
+                            <strong>Nom complet</strong>
+                        </td>
+
+                        <td>
+                            Yasmine El Kadouri
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
                             <strong>Nom d'utilisateur</strong>
                         </td>
 
                         <td>
                             yasmineel
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
+                            <strong>Email</strong>
+                        </td>
+
+                        <td>
+                            À renseigner
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
+                            <strong>Date de naissance</strong>
+                        </td>
+
+                        <td>
+                            À renseigner
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
+                            <strong>Fonction</strong>
+                        </td>
+
+                        <td>
+                            Administratrice
                         </td>
 
                     </tr>
@@ -179,37 +173,6 @@
 
                     </tr>
 
-
-                    <tr>
-
-                        <td>
-                            <strong>Statut</strong>
-                        </td>
-
-                        <td>
-
-                            <span class="active-badge">
-                                <span></span>
-                                Actif
-                            </span>
-
-                        </td>
-
-                    </tr>
-
-
-                    <tr>
-
-                        <td>
-                            <strong>Accès</strong>
-                        </td>
-
-                        <td>
-                            Administration complète
-                        </td>
-
-                    </tr>
-
                 </tbody>
 
             </table>
@@ -217,6 +180,17 @@
         </div>
 
     </div>
+
+
+    <!-- LOGOUT -->
+    <div class="logout-section">
+
+        <a href="{{ url_for('logout') }}" class="logout-btn">
+            Se déconnecter
+        </a>
+
+    </div>
+
 
 </div>
 
