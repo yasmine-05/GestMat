@@ -2,46 +2,70 @@
 <html lang="fr">
 
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
     <title>Utilisateur - COLAIMO</title>
 
     <link rel="stylesheet"
           href="{{ url_for('static', filename='style.css') }}">
+
 </head>
+
 
 <body>
 
 <div class="users-page">
 
-    <!-- HEADER -->
+    <!-- =========================
+         HEADER
+    ========================== -->
+
     <div class="users-header">
 
         <div>
-            <p class="page-label">ADMINISTRATION</p>
 
-            <h1>Compte administrateur</h1>
+            <p class="page-label">
+                ADMINISTRATION
+            </p>
+
+            <h1>
+                Compte administrateur
+            </h1>
 
             <p>
-                Consultez les informations du compte administrateur
+                Gérez les informations du compte administrateur
                 de l'application COLAIMO.
             </p>
+
         </div>
 
-        <a href="{{ url_for('home') }}" class="back-btn">
+
+        <a href="{{ url_for('home') }}"
+           class="back-btn">
+
             Retour au tableau de bord
+
         </a>
 
     </div>
 
 
-    <!-- ADMINISTRATOR PROFILE -->
+    <!-- =========================
+         ADMINISTRATOR PROFILE
+    ========================== -->
+
     <div class="admin-profile">
 
         <div class="profile-avatar">
-            Y
+
+            {{ (user[1] or 'A')[0]|upper }}
+
         </div>
+
 
         <div class="profile-info">
 
@@ -49,10 +73,12 @@
                 COMPTE ADMINISTRATEUR
             </span>
 
-            <h2>Yasmine El Kadouri</h2>
+            <h2>
+                {{ user[1] or "Nom de l'utilisateur" }}
+            </h2>
 
             <p>
-                yasmineel
+                {{ user[2] or "Nom d'utilisateur" }}
             </p>
 
         </div>
@@ -60,139 +86,165 @@
     </div>
 
 
-    <!-- PERSONAL INFORMATION -->
+    <!-- =========================
+         PERSONAL INFORMATION
+    ========================== -->
+
     <div class="users-card">
 
         <div class="users-card-header">
 
             <div>
-                <h2>Informations personnelles</h2>
+
+                <h2>
+                    Informations personnelles
+                </h2>
 
                 <p>
-                    Informations relatives au compte administrateur.
+                    Modifiez les informations du compte administrateur.
                 </p>
+
             </div>
 
         </div>
 
 
-        <div class="table-container">
+        <!-- =========================
+             EDIT FORM
+        ========================== -->
 
-            <table class="users-table">
-
-                <thead>
-
-                    <tr>
-                        <th>Information</th>
-                        <th>Détail</th>
-                    </tr>
-
-                </thead>
+        <form method="POST"
+              action="{{ url_for('update_profile') }}"
+              class="profile-form">
 
 
-                <tbody>
+            <!-- FIRST ROW -->
 
-                    <tr>
+            <div class="profile-form-row">
 
-                        <td>
-                            <strong>Nom complet</strong>
-                        </td>
+                <!-- FULL NAME -->
 
-                        <td>
-                            Yasmine El Kadouri
-                        </td>
+                <div class="profile-field">
 
-                    </tr>
+                    <label for="full_name">
+                        Nom complet
+                    </label>
 
+                    <input
+                        type="text"
+                        id="full_name"
+                        name="full_name"
+                        value="{{ user[1] or '' }}"
+                        placeholder="Nom complet"
+                        required
+                    >
 
-                    <tr>
-
-                        <td>
-                            <strong>Nom d'utilisateur</strong>
-                        </td>
-
-                        <td>
-                            yasmineel
-                        </td>
-
-                    </tr>
+                </div>
 
 
-                    <tr>
+                <!-- USERNAME -->
 
-                        <td>
-                            <strong>Email</strong>
-                        </td>
+                <div class="profile-field">
 
-                        <td>
-                            À renseigner
-                        </td>
+                    <label for="username">
+                        Nom d'utilisateur
+                    </label>
 
-                    </tr>
+                    <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        value="{{ user[2] or '' }}"
+                        placeholder="Nom d'utilisateur"
+                        required
+                    >
 
+                </div>
 
-                    <tr>
-
-                        <td>
-                            <strong>Date de naissance</strong>
-                        </td>
-
-                        <td>
-                            À renseigner
-                        </td>
-
-                    </tr>
+            </div>
 
 
-                    <tr>
+            <!-- SECOND ROW -->
 
-                        <td>
-                            <strong>Fonction</strong>
-                        </td>
+            <div class="profile-form-row">
 
-                        <td>
-                            Administratrice
-                        </td>
+                <!-- BIRTHDATE -->
 
-                    </tr>
+                <div class="profile-field">
+
+                    <label for="birthdate">
+                        Date de naissance
+                    </label>
+
+                    <input
+                        type="date"
+                        id="birthdate"
+                        name="birthdate"
+                        value="{{ user[4] or '' }}"
+                    >
+
+                </div>
 
 
-                    <tr>
+                <!-- EMAIL -->
 
-                        <td>
-                            <strong>Rôle</strong>
-                        </td>
+                <div class="profile-field">
 
-                        <td>
+                    <label for="email">
+                        Email
+                    </label>
 
-                            <span class="role-badge">
-                                Administrateur
-                            </span>
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        value="{{ user[3] or '' }}"
+                        placeholder="Email"
+                    >
 
-                        </td>
+                </div>
 
-                    </tr>
+            </div>
 
-                </tbody>
 
-            </table>
+            <!-- SAVE BUTTON -->
 
-        </div>
+            <div class="save-profile-container">
+
+                <button
+                    type="submit"
+                    class="save-profile-btn">
+
+                    Enregistrer les modifications
+
+                </button>
+
+            </div>
+
+
+        </form>
 
     </div>
 
 
-    <!-- LOGOUT -->
+    <!-- =========================
+         LOGOUT
+    ========================== -->
+
     <div class="logout-section">
 
-        <a href="{{ url_for('logout') }}" class="logout-btn">
+        <a href="{{ url_for('logout') }}"
+           class="logout-btn">
+
             Se déconnecter
+
         </a>
 
     </div>
 
 
 </div>
+
 
 </body>
 

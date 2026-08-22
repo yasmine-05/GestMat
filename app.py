@@ -7,12 +7,17 @@ app.secret_key = "gestmat-secret-key"
 DB_NAME = "database.db"
 
 
+# =========================
+# DATABASE
+# =========================
+
 def init_db():
+
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
 
     # =========================
-    # USERS / ADMINISTRATOR
+    # USERS
     # =========================
 
     cursor.execute("""
@@ -20,33 +25,39 @@ def init_db():
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             username TEXT NOT NULL,
             password TEXT NOT NULL,
-            status TEXT NOT NULL DEFAULT 'En attente'
+            status TEXT NOT NULL DEFAULT 'Actif'
         )
     """)
 
-    # Check which columns already exist
+    # Check existing columns
     cursor.execute("PRAGMA table_info(users)")
     columns = [column[1] for column in cursor.fetchall()]
 
-    # Add email column if it doesn't exist
+    # Add missing columns safely
     if "email" not in columns:
         cursor.execute("""
             ALTER TABLE users ADD COLUMN email TEXT
         """)
 
-    # Add birthdate column if it doesn't exist
     if "birthdate" not in columns:
         cursor.execute("""
             ALTER TABLE users ADD COLUMN birthdate TEXT
         """)
 
-    # Add role column if it doesn't exist
     if "role" not in columns:
         cursor.execute("""
             ALTER TABLE users ADD COLUMN role TEXT
         """)
 
-    # Make sure the administrator account exists
+    if "full_name" not in columns:
+        cursor.execute("""
+            ALTER TABLE users ADD COLUMN full_name TEXT
+        """)
+
+    # =========================
+    # ADMINISTRATOR ACCOUNT
+    # =========================
+
     cursor.execute(
         "SELECT COUNT(*) FROM users WHERE username = ?",
         ("yasmineel",)
@@ -55,36 +66,43 @@ def init_db():
     count = cursor.fetchone()[0]
 
     if count == 0:
-        cursor.execute(
-            """
+
+        cursor.execute("""
             INSERT INTO users
             (
                 username,
                 password,
+                status,
                 email,
                 birthdate,
-                role
+                role,
+                full_name
             )
-            VALUES (?, ?, ?, ?, ?)
-            """,
-            (
-                "yasmineel",
-                "1234",
-                "",
-                "",
-                "Administrateur"
-            )
-        )
+            VALUES (?, ?, ?, ?, ?, ?, ?)
+        """, (
+            "yasmineel",
+            "1234",
+            "Actif",
+            "",
+            "",
+            "Administrateur",
+            "Yasmine El Kadouri"
+        ))
+
     else:
-        # Make sure the existing administrator has the correct role
-        cursor.execute(
-            """
+
+        cursor.execute("""
             UPDATE users
             SET role = 'Administrateur'
             WHERE username = ?
-            """,
-            ("yasmineel",)
-        )
+        """, ("yasmineel",))
+
+        cursor.execute("""
+            UPDATE users
+            SET full_name = 'Yasmine El Kadouri'
+            WHERE username = ?
+            AND (full_name IS NULL OR full_name = '')
+        """, ("yasmineel",))
 
     # =========================
     # MATERIALS
@@ -122,46 +140,59 @@ def init_db():
 
 
 # =========================
-# LOGIN
+# LOGIN PAGE
 # =========================
 
 @app.route("/")
 def login_page():
+
     return render_template("login.html")
 
 
+# =========================
+# LOGIN
+# =========================
+
 @app.route("/login", methods=["POST"])
 def login():
+
     username = request.form.get("username")
     password = request.form.get("password")
 
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
 
-    cursor.execute(
-        """
-        SELECT id, username
+    cursor.execute("""
+        SELECT id, username, status
         FROM users
         WHERE username = ? AND password = ?
-        """,
-        (username, password)
-    )
+    """, (
+        username,
+        password
+    ))
 
     user = cursor.fetchone()
 
     conn.close()
 
     if user:
+
+        if user[2] != "Actif":
+
+            return """
+            <h2>Votre compte n'est pas encore activé.</h2>
+            <a href="/">Retour à la connexion</a>
+            """
+
         session["user_id"] = user[0]
         session["username"] = user[1]
 
         return redirect(url_for("home"))
 
-    else:
-        return """
-        <h2>Identifiant ou mot de passe incorrect.</h2>
-        <a href="/">Retour à la connexion</a>
-        """
+    return """
+    <h2>Identifiant ou mot de passe incorrect.</h2>
+    <a href="/">Retour à la connexion</a>
+    """
 
 
 # =========================
@@ -177,28 +208,31 @@ def home():
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
 
-    # Total number of materials
-    cursor.execute(
-        "SELECT COUNT(*) FROM materials"
-    )
+    # Total materials
+    cursor.execute("""
+        SELECT COUNT(*)
+        FROM materials
+    """)
 
     total_materials = cursor.fetchone()[0]
 
-    # Total quantity of all materials
-    cursor.execute(
-        "SELECT COALESCE(SUM(quantite), 0) FROM materials"
-    )
+    # Total quantity
+    cursor.execute("""
+        SELECT COALESCE(SUM(quantite), 0)
+        FROM materials
+    """)
 
     total_quantity = cursor.fetchone()[0]
 
-    # Total maintenance records
-    cursor.execute(
-        "SELECT COUNT(*) FROM maintenance"
-    )
+    # Total maintenance
+    cursor.execute("""
+        SELECT COUNT(*)
+        FROM maintenance
+    """)
 
     total_maintenance = cursor.fetchone()[0]
 
-    # Materials currently in maintenance
+    # Materials in maintenance
     cursor.execute("""
         SELECT COUNT(*)
         FROM maintenance
@@ -207,15 +241,17 @@ def home():
 
     materials_in_maintenance = cursor.fetchone()[0]
 
-    # Calculate maintenance percentage
+    # Maintenance percentage
     if total_materials > 0:
+
         maintenance_percentage = round(
             (materials_in_maintenance / total_materials) * 100
         )
+
     else:
+
         maintenance_percentage = 0
 
-    # Calculate available percentage
     available_percentage = 100 - maintenance_percentage
 
     # Recent materials
@@ -248,6 +284,7 @@ def home():
 
 @app.route("/logout")
 def logout():
+
     session.clear()
 
     return redirect(url_for("login_page"))
@@ -281,6 +318,10 @@ def materials():
         materials=materials
     )
 
+
+# =========================
+# ADD MATERIAL
+# =========================
 
 @app.route("/add-material", methods=["GET", "POST"])
 def add_material():
@@ -324,6 +365,10 @@ def add_material():
 
     return render_template("add_material.html")
 
+
+# =========================
+# EDIT MATERIAL
+# =========================
 
 @app.route("/edit-material/<int:material_id>", methods=["GET", "POST"])
 def edit_material(material_id):
@@ -384,6 +429,10 @@ def edit_material(material_id):
     )
 
 
+# =========================
+# DELETE MATERIAL
+# =========================
+
 @app.route("/delete-material/<int:material_id>")
 def delete_material(material_id):
 
@@ -441,6 +490,10 @@ def maintenance():
         maintenances=maintenances
     )
 
+
+# =========================
+# ADD MAINTENANCE
+# =========================
 
 @app.route("/add-maintenance", methods=["GET", "POST"])
 def add_maintenance():
@@ -502,6 +555,10 @@ def add_maintenance():
     )
 
 
+# =========================
+# EDIT MAINTENANCE
+# =========================
+
 @app.route(
     "/edit-maintenance/<int:maintenance_id>",
     methods=["GET", "POST"]
@@ -554,7 +611,9 @@ def edit_maintenance(maintenance_id):
     maintenance = cursor.fetchone()
 
     if maintenance is None:
+
         conn.close()
+
         return "Maintenance introuvable."
 
     cursor.execute("""
@@ -578,6 +637,10 @@ def edit_maintenance(maintenance_id):
     )
 
 
+# =========================
+# DELETE MAINTENANCE
+# =========================
+
 @app.route("/delete-maintenance/<int:maintenance_id>")
 def delete_maintenance(maintenance_id):
 
@@ -599,7 +662,7 @@ def delete_maintenance(maintenance_id):
 
 
 # =========================
-# ADMINISTRATOR / UTILISATEUR
+# USERS / ADMINISTRATOR
 # =========================
 
 @app.route("/users")
@@ -614,6 +677,7 @@ def users():
     cursor.execute("""
         SELECT
             id,
+            full_name,
             username,
             email,
             birthdate,
@@ -627,7 +691,9 @@ def users():
     conn.close()
 
     if user is None:
+
         session.clear()
+
         return redirect(url_for("login_page"))
 
     return render_template(
@@ -637,9 +703,54 @@ def users():
 
 
 # =========================
+# UPDATE ADMINISTRATOR PROFILE
+# =========================
+
+@app.route("/update-profile", methods=["POST"])
+def update_profile():
+
+    if "user_id" not in session:
+        return redirect(url_for("login_page"))
+
+    full_name = request.form.get("full_name")
+    username = request.form.get("username")
+    birthdate = request.form.get("birthdate")
+    email = request.form.get("email")
+
+    conn = sqlite3.connect(DB_NAME)
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        UPDATE users
+        SET
+            full_name = ?,
+            username = ?,
+            birthdate = ?,
+            email = ?
+        WHERE id = ?
+    """, (
+        full_name,
+        username,
+        birthdate,
+        email,
+        session["user_id"]
+    ))
+
+    conn.commit()
+    conn.close()
+
+    # Update username in the session
+    session["username"] = username
+
+    return redirect(url_for("users"))
+
+
+# =========================
 # RUN APPLICATION
 # =========================
 
 if __name__ == "__main__":
+
     init_db()
+
     app.run(debug=True)

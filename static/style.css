@@ -1976,3 +1976,599 @@ tbody tr:hover {
         padding: 20px;
     }
 }
+
+/* =========================
+   ADMINISTRATOR INFORMATION
+   ========================= */
+
+.personal-info-grid {
+    width: 100%;
+    max-width: 900px;
+
+    margin: 0 auto 25px;
+
+    display: grid;
+    grid-template-columns: repeat(2, minmax(300px, 380px));
+
+    justify-content: center;
+
+    gap: 20px;
+}
+
+.info-box {
+    width: 100%;
+    min-height: 135px;
+
+    display: flex;
+    align-items: center;
+
+    padding: 22px;
+
+    background: #ffffff;
+
+    border: 1px solid #e5ece7;
+    border-radius: 15px;
+
+    box-shadow: 0 6px 20px rgba(31, 65, 43, 0.06);
+
+    transition: 0.2s ease;
+}
+
+.info-box:hover {
+    transform: translateY(-3px);
+
+    box-shadow: 0 10px 25px rgba(31, 65, 43, 0.10);
+}
+
+.info-icon {
+    width: 44px;
+    height: 44px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    margin-right: 15px;
+
+    border-radius: 11px;
+
+    background: #eaf4ec;
+    color: #287a46;
+
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.info-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.info-content label {
+    display: block;
+
+    margin-bottom: 9px;
+
+    color: #68736c;
+
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.info-content input {
+    width: 100%;
+
+    padding: 11px 12px;
+
+    border: 1px solid #d9e1db;
+    border-radius: 8px;
+
+    background: #fafcfb;
+
+    color: #26352c;
+
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+
+    outline: none;
+
+    transition: 0.2s ease;
+}
+
+.info-content input:hover {
+    border-color: #b9c9bd;
+}
+
+.info-content input:focus {
+    border-color: #287a46;
+
+    background: #ffffff;
+
+    box-shadow: 0 0 0 2px #eaf4ec;
+}
+
+.info-content input::placeholder {
+    color: #a8b1ab;
+}
+
+.info-value {
+    padding: 11px 12px;
+
+    border: 1px solid #e5ece7;
+    border-radius: 8px;
+
+    background: #f8faf8;
+
+    color: #26352c;
+
+    font-size: 13px;
+}
+
+.account-active {
+    display: inline-flex;
+
+    align-items: center;
+    gap: 7px;
+
+    padding: 9px 12px;
+
+    border-radius: 8px;
+
+    background: #edf8f0;
+
+    color: #287a46;
+
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.account-active span {
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: #43a960;
+}
+
+/* =========================
+   SAVE BUTTON
+   ========================= */
+
+.users-save-section {
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin-top: 5px;
+    margin-bottom: 20px;
+}
+
+.users-save-section .save-btn {
+    min-width: 230px;
+
+    padding: 12px 24px;
+
+    border: none;
+    border-radius: 9px;
+
+    background: #287a46;
+    color: #ffffff;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+.users-save-section .save-btn:hover {
+    background: #1f6338;
+
+    transform: translateY(-1px);
+}
+
+/* =========================
+   LOGOUT
+   ========================= */
+
+.logout-section {
+    display: flex;
+
+    justify-content: center;
+
+    margin-top: 10px;
+
+    padding-bottom: 20px;
+}
+
+.logout-btn {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 12px 24px;
+
+    background: #d9534f;
+    color: #ffffff;
+
+    border-radius: 9px;
+
+    text-decoration: none;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    transition: 0.2s ease;
+}
+
+.logout-btn:hover {
+    background: #b52f2b;
+
+    transform: translateY(-1px);
+}
+
+/* =========================
+   RESPONSIVE
+   ========================= */
+
+@media (max-width: 900px) {
+
+    .personal-info-grid {
+        grid-template-columns: repeat(2, minmax(280px, 360px));
+    }
+
+}
+
+@media (max-width: 700px) {
+
+    .personal-info-grid {
+        grid-template-columns: minmax(280px, 380px);
+
+        justify-content: center;
+    }
+
+}
+
+@media (max-width: 600px) {
+
+    .personal-info-grid {
+        grid-template-columns: 1fr;
+
+        width: 100%;
+    }
+
+    .info-box {
+        min-height: 125px;
+    }
+
+    .users-save-section {
+        justify-content: stretch;
+    }
+
+    .users-save-section .save-btn {
+        width: 100%;
+    }
+
+    .logout-section {
+        justify-content: stretch;
+    }
+
+    .logout-btn {
+        width: 100%;
+    }
+
+}
+
+/* =========================
+   PROFILE FORM
+   ========================= */
+
+.profile-form {
+    padding: 30px;
+    background: #ffffff;
+}
+
+/* Two centered rows */
+.profile-form-row {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    gap: 25px;
+    width: 100%;
+    margin-bottom: 25px;
+}
+
+/* Individual information square */
+.profile-field {
+    width: 100%;
+    max-width: 390px;
+
+    min-height: 145px;
+
+    padding: 22px;
+
+    background: #ffffff;
+
+    border: 1px solid #e5ece7;
+    border-radius: 15px;
+
+    box-shadow: 0 5px 18px rgba(31, 65, 43, 0.06);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    transition: 0.2s ease;
+
+    position: relative;
+    overflow: hidden;
+}
+
+/* Green top line */
+.profile-field::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 4px;
+
+    background: #287a46;
+}
+
+/* Yellow line for the second field */
+.profile-form-row:first-child .profile-field:nth-child(2)::before {
+    background: #e0b52f;
+}
+
+/* Blue line for birthdate */
+.profile-form-row:nth-child(2) .profile-field:nth-child(1)::before {
+    background: #39749f;
+}
+
+/* Yellow line for email */
+.profile-form-row:nth-child(2) .profile-field:nth-child(2)::before {
+    background: #e0b52f;
+}
+
+/* Hover effect */
+.profile-field:hover {
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 10px 25px rgba(31, 65, 43, 0.10);
+}
+
+/* Labels */
+.profile-field label {
+    display: block;
+
+    margin-bottom: 10px;
+
+    color: #68736c;
+
+    font-size: 12px;
+
+    font-weight: 800;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.5px;
+}
+
+/* Inputs */
+.profile-field input {
+    width: 100%;
+
+    padding: 13px 14px;
+
+    border: 1px solid #d9e1db;
+
+    border-radius: 9px;
+
+    background: #f8faf8;
+
+    color: #26352c;
+
+    font-size: 14px;
+
+    font-family: Arial, Helvetica, sans-serif;
+
+    outline: none;
+
+    transition: 0.2s ease;
+}
+
+/* Input focus */
+.profile-field input:focus {
+    border-color: #287a46;
+
+    background: #ffffff;
+
+    box-shadow: 0 0 0 3px #eaf4ec;
+}
+
+/* Placeholder */
+.profile-field input::placeholder {
+    color: #a3aaa5;
+}
+
+/* Date input */
+.profile-field input[type="date"] {
+    color: #26352c;
+
+    cursor: pointer;
+}
+
+
+/* =========================
+   SAVE BUTTON AREA
+   ========================= */
+
+.save-profile-container {
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+
+    margin-top: 5px;
+    padding-top: 25px;
+
+    border-top: 1px solid #edf1ee;
+}
+
+/* Save button */
+.save-profile-btn {
+    min-width: 250px;
+
+    padding: 13px 24px;
+
+    border: none;
+
+    border-radius: 9px;
+
+    background: #287a46;
+
+    color: #ffffff;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    font-family: Arial, Helvetica, sans-serif;
+
+    cursor: pointer;
+
+    box-shadow: 0 5px 15px rgba(40, 122, 70, 0.18);
+
+    transition: 0.2s ease;
+}
+
+.save-profile-btn:hover {
+    background: #1f6338;
+
+    transform: translateY(-2px);
+
+    box-shadow: 0 8px 18px rgba(40, 122, 70, 0.25);
+}
+
+.save-profile-btn:active {
+    transform: translateY(0);
+}
+
+
+/* =========================
+   PROFILE FORM RESPONSIVE
+   ========================= */
+
+@media (max-width: 850px) {
+
+    .profile-form-row {
+        gap: 18px;
+    }
+
+    .profile-field {
+        max-width: 100%;
+    }
+
+}
+
+
+@media (max-width: 650px) {
+
+    .profile-form {
+        padding: 20px;
+    }
+
+    .profile-form-row {
+        flex-direction: column;
+
+        align-items: center;
+
+        gap: 18px;
+
+        margin-bottom: 18px;
+    }
+
+    .profile-field {
+        width: 100%;
+
+        max-width: 500px;
+    }
+
+    .save-profile-btn {
+        width: 100%;
+
+        max-width: 500px;
+    }
+
+}
+
+/* =========================
+   GESTMAT APPLICATION TITLE
+   ========================= */
+
+.dashboard-title-area {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.app-title {
+    font-family: Arial, Helvetica, sans-serif;
+
+    font-size: 42px;
+    font-weight: 800;
+
+    letter-spacing: -1.5px;
+
+    color: #173b27;
+
+    line-height: 1;
+
+    margin-bottom: 8px;
+}
+
+.app-title span {
+    color: #287a46;
+}
+
+.title-line {
+    width: 48px;
+    height: 4px;
+
+    background: #e0b52f;
+
+    border-radius: 10px;
+
+    margin-bottom: 16px;
+}
+
+.dashboard-title-area h1 {
+    margin: 0 0 7px;
+
+    color: #173b27;
+
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.dashboard-title-area p {
+    margin: 0;
+
+    color: #7a867f;
+
+    font-size: 14px;
+}
