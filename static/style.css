@@ -1977,10 +1977,6 @@ tbody tr:hover {
     }
 }
 
-/* =========================
-   ADMINISTRATOR INFORMATION
-   ========================= */
-
 .personal-info-grid {
     width: 100%;
     max-width: 900px;
@@ -2133,10 +2129,6 @@ tbody tr:hover {
     background: #43a960;
 }
 
-/* =========================
-   SAVE BUTTON
-   ========================= */
-
 .users-save-section {
     width: 100%;
 
@@ -2172,10 +2164,6 @@ tbody tr:hover {
 
     transform: translateY(-1px);
 }
-
-/* =========================
-   LOGOUT
-   ========================= */
 
 .logout-section {
     display: flex;
@@ -2213,10 +2201,6 @@ tbody tr:hover {
 
     transform: translateY(-1px);
 }
-
-/* =========================
-   RESPONSIVE
-   ========================= */
 
 @media (max-width: 900px) {
 
@@ -2266,16 +2250,11 @@ tbody tr:hover {
 
 }
 
-/* =========================
-   PROFILE FORM
-   ========================= */
-
 .profile-form {
     padding: 30px;
     background: #ffffff;
 }
 
-/* Two centered rows */
 .profile-form-row {
     display: flex;
     justify-content: center;
@@ -2285,7 +2264,6 @@ tbody tr:hover {
     margin-bottom: 25px;
 }
 
-/* Individual information square */
 .profile-field {
     width: 100%;
     max-width: 390px;
@@ -2311,7 +2289,6 @@ tbody tr:hover {
     overflow: hidden;
 }
 
-/* Green top line */
 .profile-field::before {
     content: "";
 
@@ -2326,22 +2303,18 @@ tbody tr:hover {
     background: #287a46;
 }
 
-/* Yellow line for the second field */
 .profile-form-row:first-child .profile-field:nth-child(2)::before {
     background: #e0b52f;
 }
 
-/* Blue line for birthdate */
 .profile-form-row:nth-child(2) .profile-field:nth-child(1)::before {
     background: #39749f;
 }
 
-/* Yellow line for email */
 .profile-form-row:nth-child(2) .profile-field:nth-child(2)::before {
     background: #e0b52f;
 }
 
-/* Hover effect */
 .profile-field:hover {
     transform: translateY(-3px);
 
@@ -2349,7 +2322,6 @@ tbody tr:hover {
         0 10px 25px rgba(31, 65, 43, 0.10);
 }
 
-/* Labels */
 .profile-field label {
     display: block;
 
@@ -2366,7 +2338,6 @@ tbody tr:hover {
     letter-spacing: 0.5px;
 }
 
-/* Inputs */
 .profile-field input {
     width: 100%;
 
@@ -2389,7 +2360,6 @@ tbody tr:hover {
     transition: 0.2s ease;
 }
 
-/* Input focus */
 .profile-field input:focus {
     border-color: #287a46;
 
@@ -2398,22 +2368,15 @@ tbody tr:hover {
     box-shadow: 0 0 0 3px #eaf4ec;
 }
 
-/* Placeholder */
 .profile-field input::placeholder {
     color: #a3aaa5;
 }
 
-/* Date input */
 .profile-field input[type="date"] {
     color: #26352c;
 
     cursor: pointer;
 }
-
-
-/* =========================
-   SAVE BUTTON AREA
-   ========================= */
 
 .save-profile-container {
     display: flex;
@@ -2429,7 +2392,6 @@ tbody tr:hover {
     border-top: 1px solid #edf1ee;
 }
 
-/* Save button */
 .save-profile-btn {
     min-width: 250px;
 
@@ -2467,11 +2429,6 @@ tbody tr:hover {
 .save-profile-btn:active {
     transform: translateY(0);
 }
-
-
-/* =========================
-   PROFILE FORM RESPONSIVE
-   ========================= */
 
 @media (max-width: 850px) {
 
@@ -2515,10 +2472,6 @@ tbody tr:hover {
     }
 
 }
-
-/* =========================
-   GESTMAT APPLICATION TITLE
-   ========================= */
 
 .dashboard-title-area {
     display: flex;
@@ -2572,10 +2525,6 @@ tbody tr:hover {
 
     font-size: 14px;
 }
-
-/* =========================
-   ADMIN PROFILE PICTURE
-   ========================= */
 
 .profile-avatar {
     width: 58px;

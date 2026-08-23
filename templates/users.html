@@ -20,10 +20,6 @@
 
 <div class="users-page">
 
-    <!-- =========================
-         HEADER
-    ========================== -->
-
     <div class="users-header">
 
         <div>
@@ -52,11 +48,6 @@
         </a>
 
     </div>
-
-
-    <!-- =========================
-         ADMINISTRATOR PROFILE
-    ========================== -->
 
     <div class="admin-profile">
 
@@ -88,11 +79,6 @@
 
     </div>
 
-
-    <!-- =========================
-         PERSONAL INFORMATION
-    ========================== -->
-
     <div class="users-card">
 
         <div class="users-card-header">
@@ -111,21 +97,11 @@
 
         </div>
 
-
-        <!-- =========================
-             EDIT FORM
-        ========================== -->
-
         <form method="POST"
               action="{{ url_for('update_profile') }}"
               class="profile-form">
 
-
-            <!-- FIRST ROW -->
-
             <div class="profile-form-row">
-
-                <!-- FULL NAME -->
 
                 <div class="profile-field">
 
@@ -143,9 +119,6 @@
                     >
 
                 </div>
-
-
-                <!-- USERNAME -->
 
                 <div class="profile-field">
 
@@ -166,12 +139,7 @@
 
             </div>
 
-
-            <!-- SECOND ROW -->
-
             <div class="profile-form-row">
-
-                <!-- BIRTHDATE -->
 
                 <div class="profile-field">
 
@@ -187,9 +155,6 @@
                     >
 
                 </div>
-
-
-                <!-- EMAIL -->
 
                 <div class="profile-field">
 
@@ -209,9 +174,6 @@
 
             </div>
 
-
-            <!-- SAVE BUTTON -->
-
             <div class="save-profile-container">
 
                 <button
@@ -228,11 +190,6 @@
         </form>
 
     </div>
-
-
-    <!-- =========================
-         LOGOUT
-    ========================== -->
 
     <div class="logout-section">
 

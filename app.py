@@ -6,19 +6,10 @@ app.secret_key = "gestmat-secret-key"
 
 DB_NAME = "database.db"
 
-
-# =========================
-# DATABASE
-# =========================
-
 def init_db():
 
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
-
-    # =========================
-    # USERS
-    # =========================
 
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS users (
@@ -29,11 +20,9 @@ def init_db():
         )
     """)
 
-    # Check existing columns
     cursor.execute("PRAGMA table_info(users)")
     columns = [column[1] for column in cursor.fetchall()]
 
-    # Add missing columns safely
     if "email" not in columns:
         cursor.execute("""
             ALTER TABLE users ADD COLUMN email TEXT
@@ -53,10 +42,6 @@ def init_db():
         cursor.execute("""
             ALTER TABLE users ADD COLUMN full_name TEXT
         """)
-
-    # =========================
-    # ADMINISTRATOR ACCOUNT
-    # =========================
 
     cursor.execute(
         "SELECT COUNT(*) FROM users WHERE username = ?",
@@ -104,10 +89,6 @@ def init_db():
             AND (full_name IS NULL OR full_name = '')
         """, ("yasmineel",))
 
-    # =========================
-    # MATERIALS
-    # =========================
-
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS materials (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -118,10 +99,6 @@ def init_db():
             quantite INTEGER NOT NULL
         )
     """)
-
-    # =========================
-    # MAINTENANCE
-    # =========================
 
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS maintenance (
@@ -138,20 +115,10 @@ def init_db():
     conn.commit()
     conn.close()
 
-
-# =========================
-# LOGIN PAGE
-# =========================
-
 @app.route("/")
 def login_page():
 
     return render_template("login.html")
-
-
-# =========================
-# LOGIN
-# =========================
 
 @app.route("/login", methods=["POST"])
 def login():
@@ -194,11 +161,6 @@ def login():
     <a href="/">Retour à la connexion</a>
     """
 
-
-# =========================
-# DASHBOARD
-# =========================
-
 @app.route("/dashboard")
 def home():
 
@@ -208,7 +170,6 @@ def home():
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
 
-    # Total materials
     cursor.execute("""
         SELECT COUNT(*)
         FROM materials
@@ -216,7 +177,6 @@ def home():
 
     total_materials = cursor.fetchone()[0]
 
-    # Total quantity
     cursor.execute("""
         SELECT COALESCE(SUM(quantite), 0)
         FROM materials
@@ -224,7 +184,6 @@ def home():
 
     total_quantity = cursor.fetchone()[0]
 
-    # Total maintenance
     cursor.execute("""
         SELECT COUNT(*)
         FROM maintenance
@@ -232,7 +191,6 @@ def home():
 
     total_maintenance = cursor.fetchone()[0]
 
-    # Materials in maintenance
     cursor.execute("""
         SELECT COUNT(*)
         FROM maintenance
@@ -241,7 +199,6 @@ def home():
 
     materials_in_maintenance = cursor.fetchone()[0]
 
-    # Maintenance percentage
     if total_materials > 0:
 
         maintenance_percentage = round(
@@ -254,7 +211,6 @@ def home():
 
     available_percentage = 100 - maintenance_percentage
 
-    # Recent materials
     cursor.execute("""
         SELECT *
         FROM materials
@@ -277,22 +233,12 @@ def home():
         recent_materials=recent_materials
     )
 
-
-# =========================
-# LOGOUT
-# =========================
-
 @app.route("/logout")
 def logout():
 
     session.clear()
 
     return redirect(url_for("login_page"))
-
-
-# =========================
-# MATERIALS
-# =========================
 
 @app.route("/materials")
 def materials():
@@ -317,11 +263,6 @@ def materials():
         "materials.html",
         materials=materials
     )
-
-
-# =========================
-# ADD MATERIAL
-# =========================
 
 @app.route("/add-material", methods=["GET", "POST"])
 def add_material():
@@ -364,11 +305,6 @@ def add_material():
         return redirect(url_for("materials"))
 
     return render_template("add_material.html")
-
-
-# =========================
-# EDIT MATERIAL
-# =========================
 
 @app.route("/edit-material/<int:material_id>", methods=["GET", "POST"])
 def edit_material(material_id):
@@ -428,11 +364,6 @@ def edit_material(material_id):
         material=material
     )
 
-
-# =========================
-# DELETE MATERIAL
-# =========================
-
 @app.route("/delete-material/<int:material_id>")
 def delete_material(material_id):
 
@@ -451,11 +382,6 @@ def delete_material(material_id):
     conn.close()
 
     return redirect(url_for("materials"))
-
-
-# =========================
-# MAINTENANCE
-# =========================
 
 @app.route("/maintenance")
 def maintenance():
@@ -489,11 +415,6 @@ def maintenance():
         "maintenance.html",
         maintenances=maintenances
     )
-
-
-# =========================
-# ADD MAINTENANCE
-# =========================
 
 @app.route("/add-maintenance", methods=["GET", "POST"])
 def add_maintenance():
@@ -553,11 +474,6 @@ def add_maintenance():
         "add_maintenance.html",
         materials=materials
     )
-
-
-# =========================
-# EDIT MAINTENANCE
-# =========================
 
 @app.route(
     "/edit-maintenance/<int:maintenance_id>",
@@ -636,11 +552,6 @@ def edit_maintenance(maintenance_id):
         materials=materials
     )
 
-
-# =========================
-# DELETE MAINTENANCE
-# =========================
-
 @app.route("/delete-maintenance/<int:maintenance_id>")
 def delete_maintenance(maintenance_id):
 
@@ -659,11 +570,6 @@ def delete_maintenance(maintenance_id):
     conn.close()
 
     return redirect(url_for("maintenance"))
-
-
-# =========================
-# USERS / ADMINISTRATOR
-# =========================
 
 @app.route("/users")
 def users():
@@ -701,11 +607,6 @@ def users():
         user=user
     )
 
-
-# =========================
-# UPDATE ADMINISTRATOR PROFILE
-# =========================
-
 @app.route("/update-profile", methods=["POST"])
 def update_profile():
 
@@ -739,15 +640,9 @@ def update_profile():
     conn.commit()
     conn.close()
 
-    # Update username in the session
     session["username"] = username
 
     return redirect(url_for("users"))
-
-
-# =========================
-# RUN APPLICATION
-# =========================
 
 if __name__ == "__main__":
 
