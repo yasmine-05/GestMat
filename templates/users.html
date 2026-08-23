@@ -62,7 +62,10 @@
 
         <div class="profile-avatar">
 
-            {{ (user[1] or 'A')[0]|upper }}
+            <img
+                src="{{ url_for('static', filename='bitmoji.jpeg') }}"
+                alt="Photo de profil de l'administrateur"
+            >
 
         </div>
 
