@@ -7,23 +7,34 @@
     <link rel="stylesheet"
           href="{{ url_for('static', filename='style.css') }}">
 </head>
+
 <body>
+
 <div class="add-material-page">
+
     <div class="add-material-header">
         <div>
             <h1>Ajouter matériel</h1>
             <p>Ajouter un nouveau matériel dans l'inventaire COLAIMO.</p>
         </div>
+
         <a href="{{ url_for('materials') }}" class="back-btn">
             Retour aux matériels
         </a>
     </div>
+
+
     <div class="add-material-card">
+
         <h2>Informations du matériel</h2>
+
         <form method="POST" action="{{ url_for('add_material') }}">
+
             <div class="form-grid">
+
                 <div class="form-field">
                     <label for="type">Type de matériel</label>
+
                     <select id="type" name="type" required>
                         <option value="">-- Sélectionner --</option>
                         <option value="Ordinateur">Ordinateur</option>
@@ -37,53 +48,72 @@
                         <option value="Autre">Autre</option>
                     </select>
                 </div>
+
+
                 <div class="form-field">
                     <label for="reference">Référence</label>
+
                     <input
                         type="text"
                         id="reference"
                         name="reference"
-                        placeholder="Ex : PC001"
                         required>
                 </div>
+
+
                 <div class="form-field">
                     <label for="marque">Marque</label>
+
                     <input
                         type="text"
                         id="marque"
                         name="marque"
-                        placeholder="Ex : HP"
                         required>
                 </div>
+
+
                 <div class="form-field">
                     <label for="date_achat">Date d'achat</label>
+
                     <input
                         type="date"
                         id="date_achat"
                         name="date_achat"
                         required>
                 </div>
+
+
                 <div class="form-field">
                     <label for="quantite">Quantité</label>
+
                     <input
                         type="number"
                         id="quantite"
                         name="quantite"
                         min="1"
-                        placeholder="Ex : 10"
                         required>
                 </div>
+
             </div>
+
+
             <div class="form-actions">
+
                 <a href="{{ url_for('materials') }}" class="cancel-btn">
                     Annuler
                 </a>
+
                 <button type="submit" class="save-btn">
                     Ajouter matériel
                 </button>
+
             </div>
+
         </form>
+
     </div>
+
 </div>
+
 </body>
 </html>

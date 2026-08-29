@@ -6,6 +6,7 @@ app.secret_key = "gestmat-secret-key"
 
 DB_NAME = "database.db"
 
+
 def init_db():
 
     conn = sqlite3.connect(DB_NAME)
@@ -115,10 +116,12 @@ def init_db():
     conn.commit()
     conn.close()
 
+
 @app.route("/")
 def login_page():
 
     return render_template("login.html")
+
 
 @app.route("/login", methods=["POST"])
 def login():
@@ -160,6 +163,7 @@ def login():
     <h2>Identifiant ou mot de passe incorrect.</h2>
     <a href="/">Retour à la connexion</a>
     """
+
 
 @app.route("/dashboard")
 def home():
@@ -233,12 +237,14 @@ def home():
         recent_materials=recent_materials
     )
 
+
 @app.route("/logout")
 def logout():
 
     session.clear()
 
     return redirect(url_for("login_page"))
+
 
 @app.route("/materials")
 def materials():
@@ -263,6 +269,7 @@ def materials():
         "materials.html",
         materials=materials
     )
+
 
 @app.route("/add-material", methods=["GET", "POST"])
 def add_material():
@@ -305,6 +312,7 @@ def add_material():
         return redirect(url_for("materials"))
 
     return render_template("add_material.html")
+
 
 @app.route("/edit-material/<int:material_id>", methods=["GET", "POST"])
 def edit_material(material_id):
@@ -364,6 +372,7 @@ def edit_material(material_id):
         material=material
     )
 
+
 @app.route("/delete-material/<int:material_id>")
 def delete_material(material_id):
 
@@ -382,6 +391,7 @@ def delete_material(material_id):
     conn.close()
 
     return redirect(url_for("materials"))
+
 
 @app.route("/maintenance")
 def maintenance():
@@ -415,6 +425,7 @@ def maintenance():
         "maintenance.html",
         maintenances=maintenances
     )
+
 
 @app.route("/add-maintenance", methods=["GET", "POST"])
 def add_maintenance():
@@ -474,6 +485,7 @@ def add_maintenance():
         "add_maintenance.html",
         materials=materials
     )
+
 
 @app.route(
     "/edit-maintenance/<int:maintenance_id>",
@@ -552,6 +564,7 @@ def edit_maintenance(maintenance_id):
         materials=materials
     )
 
+
 @app.route("/delete-maintenance/<int:maintenance_id>")
 def delete_maintenance(maintenance_id):
 
@@ -570,6 +583,7 @@ def delete_maintenance(maintenance_id):
     conn.close()
 
     return redirect(url_for("maintenance"))
+
 
 @app.route("/users")
 def users():
@@ -607,6 +621,7 @@ def users():
         user=user
     )
 
+
 @app.route("/update-profile", methods=["POST"])
 def update_profile():
 
@@ -617,25 +632,48 @@ def update_profile():
     username = request.form.get("username")
     birthdate = request.form.get("birthdate")
     email = request.form.get("email")
+    password = request.form.get("password")
 
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
 
-    cursor.execute("""
-        UPDATE users
-        SET
-            full_name = ?,
-            username = ?,
-            birthdate = ?,
-            email = ?
-        WHERE id = ?
-    """, (
-        full_name,
-        username,
-        birthdate,
-        email,
-        session["user_id"]
-    ))
+    if password and password.strip():
+
+        cursor.execute("""
+            UPDATE users
+            SET
+                full_name = ?,
+                username = ?,
+                birthdate = ?,
+                email = ?,
+                password = ?
+            WHERE id = ?
+        """, (
+            full_name,
+            username,
+            birthdate,
+            email,
+            password,
+            session["user_id"]
+        ))
+
+    else:
+
+        cursor.execute("""
+            UPDATE users
+            SET
+                full_name = ?,
+                username = ?,
+                birthdate = ?,
+                email = ?
+            WHERE id = ?
+        """, (
+            full_name,
+            username,
+            birthdate,
+            email,
+            session["user_id"]
+        ))
 
     conn.commit()
     conn.close()
@@ -643,6 +681,7 @@ def update_profile():
     session["username"] = username
 
     return redirect(url_for("users"))
+
 
 if __name__ == "__main__":
 

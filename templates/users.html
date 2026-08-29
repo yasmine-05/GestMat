@@ -1,211 +1,147 @@
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
-
-    <meta charset="UTF-8">
-
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-
-    <title>Utilisateur - COLAIMO</title>
-
-    <link rel="stylesheet"
-          href="{{ url_for('static', filename='style.css') }}">
-
+<meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+<title>Utilisateur - COLAIMO</title>
+<link rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}">
 </head>
-
-
 <body>
-
 <div class="users-page">
-
-    <div class="users-header">
-
-        <div>
-
-            <p class="page-label">
-                ADMINISTRATION
-            </p>
-
-            <h1>
-                Compte administrateur
-            </h1>
-
-            <p>
-                Gérez les informations du compte administrateur
-                de l'application COLAIMO.
-            </p>
-
-        </div>
-
-
-        <a href="{{ url_for('home') }}"
-           class="back-btn">
-
-            Retour au tableau de bord
-
-        </a>
-
+<div class="users-header">
+    <div>
+        <p class="page-label">
+            ADMINISTRATION
+        </p>
+        <h1>
+            Compte administrateur
+        </h1>
+        <p>
+            Gérez les informations du compte administrateur
+            de l'application GestMat.
+        </p>
     </div>
-
-    <div class="admin-profile">
-
-        <div class="profile-avatar">
-
-            <img
-                src="{{ url_for('static', filename='bitmoji.jpeg') }}"
-                alt="Photo de profil de l'administrateur"
-            >
-
-        </div>
-
-
-        <div class="profile-info">
-
-            <span class="profile-label">
-                COMPTE ADMINISTRATEUR
-            </span>
-
-            <h2>
-                {{ user[1] or "Nom de l'utilisateur" }}
-            </h2>
-
-            <p>
-                {{ user[2] or "Nom d'utilisateur" }}
-            </p>
-
-        </div>
-
-    </div>
-
-    <div class="users-card">
-
-        <div class="users-card-header">
-
-            <div>
-
-                <h2>
-                    Informations personnelles
-                </h2>
-
-                <p>
-                    Modifiez les informations du compte administrateur.
-                </p>
-
-            </div>
-
-        </div>
-
-        <form method="POST"
-              action="{{ url_for('update_profile') }}"
-              class="profile-form">
-
-            <div class="profile-form-row">
-
-                <div class="profile-field">
-
-                    <label for="full_name">
-                        Nom complet
-                    </label>
-
-                    <input
-                        type="text"
-                        id="full_name"
-                        name="full_name"
-                        value="{{ user[1] or '' }}"
-                        placeholder="Nom complet"
-                        required
-                    >
-
-                </div>
-
-                <div class="profile-field">
-
-                    <label for="username">
-                        Nom d'utilisateur
-                    </label>
-
-                    <input
-                        type="text"
-                        id="username"
-                        name="username"
-                        value="{{ user[2] or '' }}"
-                        placeholder="Nom d'utilisateur"
-                        required
-                    >
-
-                </div>
-
-            </div>
-
-            <div class="profile-form-row">
-
-                <div class="profile-field">
-
-                    <label for="birthdate">
-                        Date de naissance
-                    </label>
-
-                    <input
-                        type="date"
-                        id="birthdate"
-                        name="birthdate"
-                        value="{{ user[4] or '' }}"
-                    >
-
-                </div>
-
-                <div class="profile-field">
-
-                    <label for="email">
-                        Email
-                    </label>
-
-                    <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        value="{{ user[3] or '' }}"
-                        placeholder="Email"
-                    >
-
-                </div>
-
-            </div>
-
-            <div class="save-profile-container">
-
-                <button
-                    type="submit"
-                    class="save-profile-btn">
-
-                    Enregistrer les modifications
-
-                </button>
-
-            </div>
-
-
-        </form>
-
-    </div>
-
-    <div class="logout-section">
-
-        <a href="{{ url_for('logout') }}"
-           class="logout-btn">
-
-            Se déconnecter
-
-        </a>
-
-    </div>
-
-
+    <a href="{{ url_for('home') }}"
+       class="back-btn">
+        Retour au tableau de bord
+    </a>
 </div>
-
-
+<div class="admin-profile">
+    <div class="profile-avatar">
+        <img
+            src="{{ url_for('static', filename='bitmoji.jpeg') }}"
+            alt="Photo de profil de l'administrateur"
+        >
+    </div>
+    <div class="profile-info">
+        <span class="profile-label">
+            COMPTE ADMINISTRATEUR
+        </span>
+        <h2>
+            {{ user[1] or "Nom de l'utilisateur" }}
+        </h2>
+        <p>
+            {{ user[2] or "Nom d'utilisateur" }}
+        </p>
+    </div>
+</div>
+<div class="users-card">
+    <div class="users-card-header">
+        <div>
+            <h2>
+                Informations personnelles
+            </h2>
+            <p>
+                Modifiez les informations du compte administrateur.
+            </p>
+        </div>
+    </div>
+    <form method="POST"
+          action="{{ url_for('update_profile') }}"
+          class="profile-form">
+        <div class="profile-form-row">
+            <div class="profile-field">
+                <label for="full_name">
+                    Nom complet
+                </label>
+                <input
+                    type="text"
+                    id="full_name"
+                    name="full_name"
+                    value="{{ user[1] or '' }}"
+                    placeholder="Nom complet"
+                    required
+                >
+            </div>
+            <div class="profile-field">
+                <label for="username">
+                    Nom d'utilisateur
+                </label>
+                <input
+                    type="text"
+                    id="username"
+                    name="username"
+                    value="{{ user[2] or '' }}"
+                    placeholder="Nom d'utilisateur"
+                    required
+                >
+            </div>
+        </div>
+        <div class="profile-form-row">
+            <div class="profile-field">
+                <label for="birthdate">
+                    Date de naissance
+                </label>
+                <input
+                    type="date"
+                    id="birthdate"
+                    name="birthdate"
+                    value="{{ user[4] or '' }}"
+                >
+            </div>
+            <div class="profile-field">
+                <label for="email">
+                    Email
+                </label>
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value="{{ user[3] or '' }}"
+                    placeholder="Email"
+                >
+            </div>
+        </div>
+        <div class="profile-form-row">
+            <div class="profile-field">
+                <label for="password">
+                    Mot de passe
+                </label>
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Nouveau mot de passe"
+                >
+            </div>
+        </div>
+        <div class="save-profile-container">
+            <button
+                type="submit"
+                class="save-profile-btn">
+                Enregistrer les modifications
+            </button>
+        </div>
+    </form>
+</div>
+<div class="logout-section">
+    <a href="{{ url_for('logout') }}"
+       class="logout-btn">
+        Se déconnecter
+    </a>
+</div>
+</div>
 </body>
-
 </html>
