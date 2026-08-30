@@ -27,21 +27,6 @@ body {
     margin: 0;
 }
 
-.login-logo {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-.login-logo img {
-    display: block;
-    width: 100px;
-    height: 100px;
-    object-fit: contain;
-}
-
 .login-page h1 {
     text-align: center;
     color: #1b5e20;
